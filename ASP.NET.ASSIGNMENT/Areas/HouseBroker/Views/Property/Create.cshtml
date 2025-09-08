@@ -1,0 +1,112 @@
+﻿@model Property
+
+<div class="content">
+    <div class="content-heading">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Property | New</h4>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <form method="post" enctype="multipart/form-data">
+            <input asp-for="ImageUrl" hidden />
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="PropertyType"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <select class="form-control" asp-for="PropertyType" asp-items="@(new SelectList(ViewBag.PropertyTypes))">
+                            <option value="">-- Select Property Type --</option>
+                        </select>
+                        <span asp-validation-for="PropertyType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="Location"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <input class="form-control" asp-for="Location" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="Price"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <input class="form-control" asp-for="Price" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="Features"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <input class="form-control" asp-for="Features" />
+                        <span asp-validation-for="Features" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="Description"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <input class="form-control" asp-for="Description" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-4 col-form-label" asp-for="ImageUrl"></label>
+                <div class="col-xs-12 col-sm-4 left-gutter-off">
+                    <div class="input-group">
+                        <input type="file" name="file" class="form-control" asp-for="ImageUrl" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" style="width:100%; border-radius:5px; border: 1px solid;" />
+                        }
+                        else
+                        {
+                            <img src="~/images/default-placeholder.png"
+                                 style="width:100%; border-radius:5px; border: 1px solid;"
+                                 alt="No Image Available" />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @*   <div class="mb-3 row p-1">
+                <div class="col-6">
+                    <label asp-for="ImageUrl" class="p-0"></label>
+                    <input type="file" name="file" class="form-control" />
+                </div>
+                <div class="col-6">
+                    <img src="@Model.ImageUrl" style="width:100%; border-radius:5px; border: 1px solid;" />
+                </div>
+
+            </div> *@
+
+            <div class="form-group text-center mt-2">
+                <button type="submit" class="btn btn-success btn-sm">
+                    <i class="fa fa-save"></i> Save
+                </button>
+                <a asp-controller="Property" asp-action="Index" class="btn btn-success btn-sm">
+                    <i class="fa fa-list"></i> Show List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* This is the default validation script for client side *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
