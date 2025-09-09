@@ -1,4 +1,4 @@
-﻿namespace ASP.NET.HouseBrokerAPP
+﻿namespace ASP.NET.ASSIGNMENT.SEE
 {
     public class Class1
     {

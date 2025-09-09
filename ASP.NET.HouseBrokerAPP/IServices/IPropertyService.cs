@@ -1,11 +1,11 @@
-﻿using ASP.NET.HouseBrokerAPP.Models;
+﻿using ASP.NET.ASSIGNMENT.SEE.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.NET.HouseBrokerAPP.IServices
+namespace ASP.NET.ASSIGNMENT.SEE.IServices
 {
     public interface IPropertyService
     {

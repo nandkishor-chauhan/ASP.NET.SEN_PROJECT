@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ASP.NET.HouseBrokerAPP.Migrations
+namespace ASP.NET.ASSIGNMENT.SEE.Migrations
 {
     /// <inheritdoc />
     public partial class ChangeBRokerIdToUserId : Migration

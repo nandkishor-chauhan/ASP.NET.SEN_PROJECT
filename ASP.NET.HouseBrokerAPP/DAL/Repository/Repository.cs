@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.NET.HouseBrokerAPP.DAL.Repository
+namespace ASP.NET.ASSIGNMENT.SEE.DAL.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

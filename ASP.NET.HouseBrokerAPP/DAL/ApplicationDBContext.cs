@@ -1,4 +1,4 @@
-﻿using ASP.NET.HouseBrokerAPP.Models;
+﻿using ASP.NET.ASSIGNMENT.SEE.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.NET.HouseBrokerAPP.DAL
+namespace ASP.NET.ASSIGNMENT.SEE.DAL
 {
     public class ApplicationDBContext : IdentityDbContext
     {
@@ -15,6 +15,8 @@ namespace ASP.NET.HouseBrokerAPP.DAL
         {
 
         }
+
+        public DbSet<StudentInformation> StudentInformation { get; set; }
 
         public DbSet<Property> Properties { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }

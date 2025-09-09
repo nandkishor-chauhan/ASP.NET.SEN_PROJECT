@@ -1,8 +1,8 @@
 using ASP.NET.ASSIGNMENT.Models;
-using ASP.NET.HouseBrokerAPP.DAL;
-using ASP.NET.HouseBrokerAPP.IServices;
-using ASP.NET.HouseBrokerAPP.Models;
-using ASP.NET.HouseBrokerAPP.Services;
+using ASP.NET.ASSIGNMENT.SEE.DAL;
+using ASP.NET.ASSIGNMENT.SEE.IServices;
+using ASP.NET.ASSIGNMENT.SEE.Models;
+using ASP.NET.ASSIGNMENT.SEE.Services;
 using ASP.NET.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;

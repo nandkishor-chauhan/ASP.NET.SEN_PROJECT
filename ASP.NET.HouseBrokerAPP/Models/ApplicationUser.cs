@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace ASP.NET.HouseBrokerAPP.Models
+namespace ASP.NET.ASSIGNMENT.SEE.Models
 {
     public class ApplicationUser : IdentityUser
     {

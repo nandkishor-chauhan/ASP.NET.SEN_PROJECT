@@ -1,7 +1,7 @@
-﻿using ASP.NET.HouseBrokerAPP.DAL.Repository;
-using ASP.NET.HouseBrokerAPP.Models;
+﻿using ASP.NET.ASSIGNMENT.SEE.DAL.Repository;
+using ASP.NET.ASSIGNMENT.SEE.Models;
 
-namespace ASP.NET.HouseBrokerAPP.DAL
+namespace ASP.NET.ASSIGNMENT.SEE.DAL
 {
     public interface IUnitOfWork : IDisposable
     {

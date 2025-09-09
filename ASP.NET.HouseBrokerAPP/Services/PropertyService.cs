@@ -1,6 +1,6 @@
-﻿using ASP.NET.HouseBrokerAPP.DAL;
-using ASP.NET.HouseBrokerAPP.IServices;
-using ASP.NET.HouseBrokerAPP.Models;
+﻿using ASP.NET.ASSIGNMENT.SEE.DAL;
+using ASP.NET.ASSIGNMENT.SEE.IServices;
+using ASP.NET.ASSIGNMENT.SEE.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASP.NET.HouseBrokerAPP.Services
+namespace ASP.NET.ASSIGNMENT.SEE.Services
 {
     public class PropertyService : IPropertyService
     {

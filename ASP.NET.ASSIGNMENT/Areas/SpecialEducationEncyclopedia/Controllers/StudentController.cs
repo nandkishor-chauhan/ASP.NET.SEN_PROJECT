@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ASP.NET.ASSIGNMENT.Areas.HouseBroker.Controllers
+namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
 {
-    [Area("HouseBroker")]
+    [Area("SpecialEducationEncyclopedia")]
     [Authorize]
-    public class HomeController : Controller
+    public class StudentController : Controller
     {
         private readonly IPropertyService _propertyService;
-        public HomeController(IPropertyService propertyService)
+        public StudentController(IPropertyService propertyService)
         {
             _propertyService = propertyService;
         }
