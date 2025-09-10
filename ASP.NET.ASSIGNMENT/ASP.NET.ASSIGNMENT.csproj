@@ -9,6 +9,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\js\PropertyController.js" />
     <Content Remove="wwwroot\js\PropertyViewController.js" />
+    <Content Remove="wwwroot\js\StudentController.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\StudentController.js" />
     <None Include="wwwroot\js\PropertyViewController.js" />
     <None Include="wwwroot\js\PropertyController.js" />
   </ItemGroup>

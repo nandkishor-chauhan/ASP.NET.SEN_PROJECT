@@ -31,6 +31,10 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL
         public IRepository<Property> PropertyRepository => _propertyRepository ??= new Repository<Property>(_context);
 
 
+        private IRepository<StudentInformation>? _studentInfoRepository;
+        public IRepository<StudentInformation> StudentInfoRepository => _studentInfoRepository ??= new Repository<StudentInformation>(_context);
+
+
         public void Save()
         {
             _context.SaveChanges();

@@ -9,6 +9,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL
         Task SaveAsync();
 
         IRepository<Property> PropertyRepository { get; }
+        IRepository<StudentInformation> StudentInfoRepository { get; }
 
         
         

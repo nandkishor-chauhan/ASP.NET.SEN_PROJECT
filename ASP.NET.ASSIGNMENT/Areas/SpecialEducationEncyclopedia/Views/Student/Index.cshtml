@@ -76,7 +76,7 @@
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         مقيد بالدعم
                                     </label>
-                            </div>
+                                </div>
                             </div>
                             <div class="col-4">
                                 <label>
@@ -88,17 +88,17 @@
                     <div class="filter-section">
                         <div class="row">
                             <div class="col-8">
-                            <input type="checkbox" id="status1"> <label for="status1">1</label>
-                            <input type="checkbox" id="status2"> <label for="status2">2</label>
-                            <input type="checkbox" id="status3"> <label for="status3">3</label>
-                            <input type="checkbox" id="statusAll"> <label for="statusAll">All</label>
+                                <input type="checkbox" id="status1"> <label for="status1">1</label>
+                                <input type="checkbox" id="status2"> <label for="status2">2</label>
+                                <input type="checkbox" id="status3"> <label for="status3">3</label>
+                                <input type="checkbox" id="statusAll"> <label for="statusAll">All</label>
                             </div>
-                                <div class="col-4">
+                            <div class="col-4">
                                 <label>
                                     : مستوى الدعم
-                                        </label>
+                                </label>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <div class="filter-section">
                         <div class="row">
@@ -108,12 +108,12 @@
                                 <input type="checkbox" id="support9"> <label for="support9">9</label>
                                 <input type="checkbox" id="supportAll"> <label for="supportAll">All</label>
                             </div>
-                                <div class="col-4">
+                            <div class="col-4">
                                 <label>
                                     : الصف
-                                        </label>
+                                </label>
+                            </div>
                         </div>
-                    </div>
                     </div>
 
                     <div class="text-center mb-2">
@@ -130,27 +130,8 @@
                                     <th>سر</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>قطر</td>
-                                    <td>حامد - BPIZZ VFIWS DXZZY</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>قطر</td>
-                                    <td>سالم - FZIQO MIPZG EEIHD</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>قطر</td>
-                                    <td>عبدالله - …VTML GECZR BN</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>جيبوتي</td>
-                                    <td>يوسف - …PSMNN EOIWY</td>
-                                    <td>4</td>
-                                </tr>
+                            <tbody id="student-table-body">
+                                <!-- rows will be injected here -->
                             </tbody>
                         </table>
                     </div>
@@ -167,14 +148,16 @@
                     <div class="content-heading">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Student FullName</h4>
+                                <h4 id="student-fullname"></h4>
                             </div>
                         </div>
                     </div>
+
                     <div class="content-body">
                         <form method="post" enctype="multipart/form-data">
                             @* <input asp-for="ImageUrl" hidden /> *@
 
+                            <!-- Address Information -->
                             <div class="row">
                                 <div class="col-4 border rounded p-3 mb-3" dir="rtl">
                                     <div class="form-group row mb-2">
@@ -183,33 +166,33 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">المدينة:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="أدخل اسم المدينة" />
+                                            <input type="text" id="student-city" class="form-control" placeholder="أدخل اسم المدينة" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="أدخل المنطقة" />
+                                            <input type="text" id="student-zone" class="form-control" placeholder="أدخل المنطقة" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="أدخل رقم الشارع" />
+                                            <input type="text" id="student-street" class="form-control" placeholder="أدخل رقم الشارع" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="أدخل رقم المنزل" />
+                                            <input type="text" id="student-home" class="form-control" placeholder="أدخل رقم المنزل" />
                                         </div>
                                     </div>
                                 </div>
 
-                               @*  contact Information *@
+                                @*  contact Information *@
                                 <div class="col-4 border rounded p-3 mb-3" dir="rtl">
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-12 col-form-label text-end pe-5">بيانات التواصل :</label>
@@ -217,32 +200,33 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="8584854485" />
+                                            <input type="text" id="father-phone" class="form-control" placeholder="8584854485" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="5415485454" />
+                                            <input type="text" id="mother-phone" class="form-control" placeholder="5415485454" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder=" 899545489 " />
+                                            <input type="text" id="uncle-phone" class="form-control" placeholder="899545489" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="545645645" />
+                                            <input type="text" id="other-phone" class="form-control" placeholder="545645645" />
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Personal Information -->
                                 <div class="col-4 border rounded p-3 mb-3" dir="rtl">
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-12 col-form-label text-end pe-5">البيانات الشخصية:</label>
@@ -250,46 +234,46 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder=" 121" />
+                                            <input type="text" id="qatar-id" class="form-control" placeholder="121" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="ABC" />
+                                            <input type="text" id="first-name" class="form-control" placeholder="ABC" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="Last" />
+                                            <input type="text" id="last-name" class="form-control" placeholder="Last" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" placeholder="NID" />
+                                            <input type="text" id="nationality" class="form-control" placeholder="NID" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label text-start"> الصف:</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" placeholder="7" />
+                                            <input type="text" id="grade" class="form-control" placeholder="7" />
                                         </div>
 
                                         <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" placeholder="3" />
+                                            <input type="text" id="division" class="form-control" placeholder="3" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                          @*   level *@
+                            @*   level *@
 
                             <div class="" dir="rtl">
                                 <div class="content-body mb-3 border shadow-sm">
@@ -302,7 +286,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
                                                     <div class="col-sm-6">
-                                                        <input type="text" class="form-control" placeholder="3" />
+                                                        <input type="text" id="support-level" class="form-control" placeholder="3" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -310,7 +294,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
                                                     <div class="col-sm-4">
-                                                        <input type="text" class="form-control" placeholder="2" />
+                                                        <input type="text" id="previous-support-level" class="form-control" placeholder="2" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,7 +302,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="قيد بالدعم" />
+                                                        <input type="text" id="entry-status" class="form-control" placeholder="قيد بالدعم" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,7 +310,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label text-danger"> المدرسة السابق:</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" placeholder=" القادسية الابتدائية للبنين" />
+                                                <input type="text" id="former-school" class="form-control" placeholder="القادسية الابتدائية للبنين" />
                                             </div>
                                         </div>
                                     </div>
@@ -341,7 +325,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="30/01/2009" />
+                                                        <input type="text" id="date-of-birth" class="form-control" placeholder="30/01/2009" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -349,7 +333,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="07/05/2008" />
+                                                        <input type="text" id="date-of-registration" class="form-control" placeholder="07/05/2008" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,7 +341,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="09/02/2015" />
+                                                        <input type="text" id="report-date" class="form-control" placeholder="09/02/2015" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -365,18 +349,18 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start"> شدة :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="واضح" />
+                                                        <input type="text" id="severity" class="form-control" placeholder="واضح" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="HC77083385" />
+                                                        <input type="text" id="health-number" class="form-control" placeholder="HC77083385" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -384,7 +368,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="الإعاقة الذهنية ومتلازماتها" />
+                                                        <input type="text" id="diagnosis" class="form-control" placeholder="الإعاقة الذهنية ومتلازماتها" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -392,7 +376,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control text-danger" placeholder="إعاقة ذهنية" />
+                                                        <input type="text" id="type-of-disability" class="form-control text-danger" placeholder="إعاقة ذهنية" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -400,7 +384,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">IQ :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="92" />
+                                                        <input type="text" id="iq" class="form-control" placeholder="92" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -411,7 +395,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">الحالة :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="بسيط" />
+                                                        <input type="text" id="stat" class="form-control" placeholder="بسيط" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -419,11 +403,11 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" placeholder="مركز رؤى للتقييم والاستشارات والدعم" />
+                                                        <input type="text" id="report-source" class="form-control" placeholder="مركز رؤى للتقييم" />
                                                     </div>
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -433,15 +417,12 @@
                                         الوصف حسب التقييم
                                     </div>
                                     <div class="card-body">
-                                        <textarea class="col-sm-12 h-100">
-                                            كبر حجم الرأس ونقص في الانتباه والتركيز والحركة الزائدة (ADHD) وصعوبات في النطق واللغة
-                                            وتدني القدرات الإدراكية والمعرفية مقارنة بعمره الزمني.
-                                        </textarea>
+                                        <textarea id="case-description" class="col-sm-12 h-100"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            
+
                         </form>
                     </div>
                 </div>
@@ -457,5 +438,8 @@
         </div>
     </div>
 
+    @section Scripts {
+        <script src="~/js/StudentController.js"></script>
+    }
 </body>
 </html>
