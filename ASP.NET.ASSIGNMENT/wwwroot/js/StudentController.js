@@ -37,12 +37,20 @@ function renderTable(students) {
     $(".clickable-row").on("click", function () {
         let studentId = $(this).data("qatarid");
         console.log("StudentId is", studentId);
+
         $(".clickable-row").removeClass("table-active");
         $(this).addClass("table-active");
         getStudentById(studentId);
     });
 }
 
+function confirmDelete() {
+    if (confirm("هل أنت متأكد أنك تريد الحذف؟")) {
+        alert("تم الحذف بنجاح");
+    } else {
+        alert("تم إلغاء الحذف");
+    }
+}
 
 function getStudentById(qatarID) {
     $.ajax({
@@ -106,6 +114,57 @@ function getStudentById(qatarID) {
         }
     });
 }
+
+
+function saveStudent() {
+    let student = {
+        //fullName: $("#student-fullname").text(),
+        city: $("#student-city").val(),
+        zoneNumber: $("#student-zone").val(),
+        streetNumber: $("#student-street").val(),
+        homeNumber: $("#student-home").val(),
+        fatherPhone: $("#father-phone").val(),
+        matherPhone: $("#mother-phone").val(),
+        uncalPhone: $("#uncle-phone").val(),
+        otherPhone: $("#other-phone").val(),
+        qatarID: $("#qatar-id").val(),
+        firstName: $("#first-name").val(),
+        lastName: $("#last-name").val(),
+        nationalty: $("#nationality").val(),
+        grade: $("#grade").val(),
+        division: $("#division").val(),
+        levelSuport: $("#support-level").val(),
+        formerLevel: $("#previous-support-level").val(),
+        entryStatus: $("#entry-status").val(),
+        formerSchool: $("#former-school").val(),
+        dateOfBirth: $("#date-of-birth").val(),
+        dateOfRegistration: $("#date-of-registration").val(),
+        reportDate: $("#report-date").val(),
+        severity: $("#severity").val(),
+        healthNumber: $("#health-number").val(),
+        diagnosis: $("#diagnosis").val(),
+        typeOfDisability: $("#type-of-disability").val(),
+        iq: $("#iq").val(),
+        stat: $("#stat").val(),
+        reportSource: $("#report-source").val(),
+        caseDescription: $("#case-description").val()
+    };
+
+    $.ajax({
+        url: "/SpecialEducationEncyclopedia/Student/Create",
+        type: "POST",
+        data: student,
+        success: function (res) {
+            alert(res.message);
+        },
+        error: function (err) {
+            console.error(err);
+            alert("Error saving student");
+        }
+    });
+}
+
+
 
 
 

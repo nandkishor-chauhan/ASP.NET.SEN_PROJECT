@@ -86,38 +86,32 @@
                         </div>
                     </div>
                     <div class="filter-section">
-                        <div class="row">
-                            <div class="col-8">
-                                <input type="checkbox" id="status1"> <label for="status1">1</label>
-                                <input type="checkbox" id="status2"> <label for="status2">2</label>
-                                <input type="checkbox" id="status3"> <label for="status3">3</label>
-                                <input type="checkbox" id="statusAll"> <label for="statusAll">All</label>
-                            </div>
-                            <div class="col-4">
-                                <label>
-                                    : مستوى الدعم
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter-section">
-                        <div class="row">
-                            <div class="col-8">
-                                <input type="checkbox" id="support7"> <label for="support7">7</label>
-                                <input type="checkbox" id="support8"> <label for="support8">8</label>
-                                <input type="checkbox" id="support9"> <label for="support9">9</label>
-                                <input type="checkbox" id="supportAll"> <label for="supportAll">All</label>
-                            </div>
-                            <div class="col-4">
-                                <label>
-                                    : الصف
-                                </label>
-                            </div>
+                            <div class="col-12" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <div class="col-12">
+                                    <label class="col-form-label text-start">رقم الهوية الشخصية:(ID)</label>
+                                        <input type="text" id="student-city" class="form-control"  />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <div class="col-sm-12">
+                                    <label class="col-form-label text-start">اسم الطالب:(Name)</label>
+                                        <input type="text" id="student-zone" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <div class="col-sm-12">
+                                    <label class="col-form-label text-start"> رقم الهاتف المحمو: (Mobile)</label>
+                                        <input type="text" id="student-street" class="form-control" />
+                                    </div>
+                                </div>
                         </div>
                     </div>
 
                     <div class="text-center mb-2">
-                        <button class="btn btn-success w-100">تحديث البيانات</button>
+                        <button class="btn btn-success w-100"> Search</button>
                     </div>
 
                     <!-- Student list -->
@@ -147,11 +141,8 @@
                 <div class="content">
                     <div class="content-heading">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <h4 id="student-fullname"></h4>
-                            </div>
-                            <div class="col-md-2">
-                                <h4 class="btn btn-close btn-danger"></h4>
                             </div>
                         </div>
                     </div>
@@ -423,11 +414,6 @@
                                         <textarea id="case-description" class="col-sm-12 h-100"></textarea>
                                     </div>
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Quick Upload</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -435,10 +421,10 @@
 
                 <!-- Footer Buttons -->
                 <div class="d-flex flex-wrap gap-2 footer-buttons mt-3">
-                    <button class="btn btn-primary">Update</button>
-                    <button class="btn btn-danger" onclick="confirmDelete()">حذف Delete</button>
-                    <button class="btn btn-secondary">Edit</button>
-                    <a asp-controller="Student" asp-action="Create" class="btn btn-primary">New</a>
+                    <button class="btn btn-primary">جديد</button>
+                    <button class="btn btn-warning">تعديل</button>
+                    <button class="btn btn-danger">حذف</button>
+                    <button class="btn btn-success">تحديث الملفات</button>
                 </div>
             </div>
         </div>
