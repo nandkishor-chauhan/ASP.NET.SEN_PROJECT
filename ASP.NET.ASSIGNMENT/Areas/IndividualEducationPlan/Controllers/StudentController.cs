@@ -4,9 +4,9 @@ using ASP.NET.ASSIGNMENT.SEE.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
+namespace ASP.NET.ASSIGNMENT.Areas.IndividualEducationPlan.Controllers
 {
-    [Area("SpecialEducationEncyclopedia")]
+    [Area("IndividualEducationPlan")]
     [Authorize]
     public class StudentController : Controller
     {
@@ -27,7 +27,11 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         {
             return View();
         }
-        public IActionResult Search()
+        public IActionResult ShortTerm()
+        {
+            return View();
+        }
+        public IActionResult IndividualPlan()
         {
             return View();
         }
