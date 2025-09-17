@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ASP.NET.HouseBrokerAPP\ASP.NET.ASSIGNMENT.SEE.csproj" />
+    <ProjectReference Include="..\ASP.NET.ASSIGNMENT.SEE\ASP.NET.ASSIGNMENT.SEE.csproj" />
     <ProjectReference Include="..\ASP.NET.Utilities\ASP.NET.Utilities.csproj" />
   </ItemGroup>
 
