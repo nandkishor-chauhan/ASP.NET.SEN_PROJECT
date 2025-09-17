@@ -27,10 +27,6 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL
         }
 
 
-        private IRepository<Property>? _propertyRepository;
-        public IRepository<Property> PropertyRepository => _propertyRepository ??= new Repository<Property>(_context);
-
-
         private IRepository<StudentInformation>? _studentInfoRepository;
         public IRepository<StudentInformation> StudentInfoRepository => _studentInfoRepository ??= new Repository<StudentInformation>(_context);
 

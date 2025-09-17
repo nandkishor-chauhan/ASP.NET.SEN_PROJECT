@@ -18,7 +18,6 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL
 
         public DbSet<StudentInformation> StudentInformations { get; set; }
 
-        public DbSet<Property> Properties { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

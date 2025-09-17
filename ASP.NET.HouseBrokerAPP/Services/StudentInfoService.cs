@@ -47,28 +47,6 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                 .ToList();
         }
 
-        public async Task<IEnumerable<object>> GetAvailablePropertyList()
-        {
-            var result = await (from p in _unitOfWork.PropertyRepository.Get()
-                                join u in _userManager.Users
-                                on p.UserId equals u.UserName
-                                select new
-                                {
-                                    p.Id,
-                                    p.PropertyType,
-                                    p.Location,
-                                    p.Price,
-                                    p.Features,
-                                    p.Description,
-                                    p.ImageUrl,
-                                    BrokerName = u.UserName,
-                                    BrokerEmail = u.Email,
-                                    BrokerPhone = u.PhoneNumber,
-                                  //BrokerCity = u.City,
-                                   // BrokerStreet = u.Street
-                                }).ToListAsync();
-            return result;
-        }
 
         public async Task<StudentInformation> GetById(int qatarID)
         {

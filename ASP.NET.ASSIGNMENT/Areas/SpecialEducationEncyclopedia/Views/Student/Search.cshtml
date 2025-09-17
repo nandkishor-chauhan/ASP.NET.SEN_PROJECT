@@ -85,34 +85,32 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="filter-section">
-                            <div class="col-12" dir="rtl">
-                                <div class="form-group row mb-2">
-                                    <div class="col-12">
+                        <div class="col-12" dir="rtl">
+                            <div class="form-group row mb-2">
+                                <div class="col-12">
                                     <label class="col-form-label text-start">رقم الهوية الشخصية:(ID)</label>
-                                        <input type="text" id="student-city" class="form-control"  />
-                                    </div>
+                                    <input type="text" id="filter-qatar-id" class="form-control" />
                                 </div>
+                            </div>
 
-                                <div class="form-group row mb-2">
-                                    <div class="col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-sm-12">
                                     <label class="col-form-label text-start">اسم الطالب:(Name)</label>
-                                        <input type="text" id="student-zone" class="form-control" />
-                                    </div>
+                                    <input type="text" id="filter-fullname" class="form-control" />
                                 </div>
+                            </div>
 
-                                <div class="form-group row mb-2">
-                                    <div class="col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-sm-12">
                                     <label class="col-form-label text-start"> رقم الهاتف المحمو: (Mobile)</label>
-                                        <input type="text" id="student-street" class="form-control" />
-                                    </div>
+                                    <input type="text" id="filter-phone" class="form-control" />
                                 </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="text-center mb-2">
-                        <button class="btn btn-success w-100"> Search</button>
-                    </div>
 
                     <!-- Student list -->
                     <div class="student-table">
@@ -419,19 +417,19 @@
                     </div>
                 </div>
 
-                <!-- Footer Buttons -->
+             @*    <!-- Footer Buttons -->
                 <div class="d-flex flex-wrap gap-2 footer-buttons mt-3">
                     <button class="btn btn-primary">جديد</button>
                     <button class="btn btn-warning">تعديل</button>
                     <button class="btn btn-danger">حذف</button>
                     <button class="btn btn-success">تحديث الملفات</button>
-                </div>
+                </div> *@
             </div>
         </div>
     </div>
 
     @section Scripts {
-        <script src="~/js/StudentController.js"></script>
+        <script src="~/js/StudentSearchController.js"></script>
     }
 </body>
 </html>

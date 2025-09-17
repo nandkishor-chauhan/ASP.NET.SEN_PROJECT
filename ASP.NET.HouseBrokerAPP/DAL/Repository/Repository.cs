@@ -83,16 +83,6 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL.Repository
             _dbSet.Remove(entity);
         }
 
-        public virtual void DeleteRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                if (_context.Entry(entity).State == EntityState.Detached)
-                    _dbSet.Attach(entity);
-            }
-
-            _dbSet.RemoveRange(entities);
-        }
 
         public virtual void Update(TEntity entity)
         {
@@ -101,55 +91,6 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL.Repository
 
             _context.Entry(entity).State = EntityState.Modified;
         }
-
-        public virtual void Update(TEntity entity, string property)
-        {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).Property(property).IsModified = true;
-        }
-
-        public virtual void Update(TEntity entity, IEnumerable<string> properties)
-        {
-            _dbSet.Attach(entity);
-            foreach (var property in properties)
-                _context.Entry(entity).Property(property).IsModified = true;
-        }
-
-        public virtual void UpdateProperty(TEntity entity, string propertyName, object propertyValue)
-        {
-            var entry = _context.Entry(entity).Property(propertyName);
-            entry.CurrentValue = propertyValue;
-            entry.IsModified = true;
-        }
-
-        public virtual void Update(TEntity entity, TEntity model)
-        {
-            var updatedEntity = MergeEntities(entity, model);
-
-            _dbSet.Attach(entity);
-            _context.Entry(entity).CurrentValues.SetValues(updatedEntity);
-        }
-
-        private static TEntity MergeEntities(TEntity original, TEntity updated)
-        {
-            foreach (var prop in typeof(TEntity).GetProperties())
-            {
-                var newValue = prop.GetValue(updated);
-                if (newValue == null)
-                {
-                    var oldValue = prop.GetValue(original);
-                    prop.SetValue(updated, oldValue);
-                }
-            }
-
-            return updated;
-        }
-
-        public virtual async Task<IEnumerable<TEntity>> GetWithRawSqlAsync(string sql, params object[] parameters)
-        {
-            return await _dbSet.FromSqlRaw(sql, parameters).ToListAsync();
-        }
-
         public virtual async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();

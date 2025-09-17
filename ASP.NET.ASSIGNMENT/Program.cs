@@ -36,7 +36,6 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IStudentInfoService, StudentInfoService>();
 
 var app = builder.Build();
@@ -61,6 +60,6 @@ app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=HouseBroker}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=SpecialEducationEncyclopedia}/{controller=Student}/{action=Index}/{id?}");
 
 app.Run();
