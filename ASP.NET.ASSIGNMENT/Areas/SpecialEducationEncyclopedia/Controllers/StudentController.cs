@@ -33,6 +33,20 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         }
 
 
+
+
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(int qatarID)
+        //{
+        //    var existingStudent = await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
+        //    if (existingStudent == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(existingStudent);
+        //}
+
+
         [HttpPost]
         public async Task<IActionResult> Create(StudentInformation viewModel, IFormFile? file)
         {
@@ -125,9 +139,65 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
                return RedirectToAction("Index");*/
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(int studentId, List<IFormFile> files)
+        {
+            if (studentId <= 0)
+                return BadRequest(new { success = false, message = "Valid Student ID is required" });
+
+            if (files == null || files.Count == 0)
+                return BadRequest(new { success = false, message = "No files uploaded" });
+
+            // Folder path: wwwroot/uploads/{studentId}
+            string studentFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", studentId.ToString());
+
+            // If folder already exists, new files will just be added to it
+            if (!Directory.Exists(studentFolder))
+                Directory.CreateDirectory(studentFolder);
+
+            foreach (var file in files)
+            {
+                string filePath = Path.Combine(studentFolder, file.FileName);
+
+                //Overwrite existing file if same name
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // OR (to prevent overwrite, generate unique file name):
+                /*
+                string uniqueFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                string filePath = Path.Combine(studentFolder, uniqueFileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                */
+            }
+
+            return Ok(new { success = true, message = $"Uploaded {files.Count} file(s) into folder {studentId}" });
+        }
+
+
 
 
         #region API CALLS
+
+        public async Task<JsonResult> GetCreatedData()
+        {
+            try
+            {
+                var schoolNameList = await _studentInfoService.GetSchoolNameList();
+                var gradeNameList = await _studentInfoService.GetGradeNameList();
+                return Json(new { success = true, data = schoolNameList, gradeNameList });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
+
         public async Task<JsonResult> Get()
         {
             try

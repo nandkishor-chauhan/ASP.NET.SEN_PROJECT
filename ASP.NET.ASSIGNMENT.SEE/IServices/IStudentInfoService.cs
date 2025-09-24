@@ -6,6 +6,8 @@ namespace ASP.NET.ASSIGNMENT.SEE.IServices
     {
         Task<object> GetCreateData();
         Task<object> Get();
+        Task<IEnumerable<object>> GetSchoolNameList();
+        Task<IEnumerable<object>> GetGradeNameList();
         Task<StudentInformation> GetById(int qatarID);
         Task<StudentInformation> Create(StudentInformation entity);
         Task<StudentInformation> Edit(StudentInformation entity);

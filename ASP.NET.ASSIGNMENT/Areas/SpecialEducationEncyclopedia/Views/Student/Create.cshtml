@@ -39,6 +39,9 @@
         .footer-buttons button {
             min-width: 120px;
         }
+
+     
+
     </style>
 </head>
 <body>
@@ -123,28 +126,32 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="father-phone" class="form-control" />
+                                            <input type="number" id="father-phone" class="form-control"
+                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="mother-phone" class="form-control"/>
+                                            <input type="number" id="mother-phone" class="form-control"
+                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="uncle-phone" class="form-control" />
+                                            <input type="number" id="uncle-phone" class="form-control"
+                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="other-phone" class="form-control"/>
+                                            <input type="number" id="other-phone" class="form-control"
+                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
                                 </div>
@@ -157,9 +164,11 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="qatar-id" class="form-control" />
+                                            <input type="number" id="qatar-id" class="form-control"
+                                                   oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" />
                                         </div>
                                     </div>
+
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
@@ -183,14 +192,37 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label text-start"> الصف:</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" id="grade" class="form-control"/>
+                                        <label class="col-sm-4 col-form-label text-start">الصف:</label>
+                                        <div class="col-sm-3 position-relative">
+                                            <select id="grade" class="form-control custom-select">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
                                         </div>
 
                                         <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" id="division" class="form-control" />
+                                        <div class="col-sm-3 position-relative">
+                                            <select id="division" class="form-control custom-select">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="Other">Other</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -208,32 +240,49 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" id="support-level" class="form-control" />
+                                                    <div class="col-sm-6 position-relative">
+                                                        <select id="support-level" class="form-control custom-select">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" id="previous-support-level" class="form-control" />
+                                                    <div class="col-sm-4 position-relative">
+                                                        <select id="previous-support-level" class="form-control custom-select">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="entry-status" class="form-control" />
+                                                    <div class="col-sm-8 position-relative">
+                                                        <select id="entry-status" class="form-control custom-select">
+                                                            <option value="Supported">غير مقيد بالدعم</option>
+                                                            <option value="Not Supported">مقيد بالدعم</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label text-danger"> المدرسة السابق:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" id="former-school" class="form-control" />
+                                            <label class="col-sm-2 col-form-label text-danger">المدرسة السابقة:</label>
+                                            <div class="col-sm-6 position-relative">
+                                                <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)">
+                                                    <option value="">اختر المدرسة</option>
+                                                    <option value="Other">New School</option>
+                                                </select>
+                                                <input type="text" id="new-school" class="form-control mt-2" style="display:none;" />
                                             </div>
                                         </div>
                                     </div>
@@ -271,8 +320,13 @@
                                             <div class="col-sm-2">
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start"> شدة :</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="severity" class="form-control" />
+                                                    <div class="col-sm-8 position-relative">
+                                                        <select id="severity" class="form-control custom-select">
+                                                            <option value="بسيط">بسيط</option>
+                                                            <option value="متوسطة">متوسطة</option>
+                                                            <option value="شديدة">شديدة</option>
+                                                            <option value="عميقة">عميقة</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -298,8 +352,30 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="type-of-disability" class="form-control text-danger" />
+                                                    <div class="col-sm-8 position-relative">
+                                                        <select id="type-of-disability" class="form-control text-danger custom-select">
+                                                            <option value="صعوبات تعلم">صعوبات تعلم</option>
+                                                            <option value="مشكلات التعلم">مشكلات التعلم</option>
+                                                            <option value="الإعاقة الجسدية">الإعاقة الجسدية</option>
+                                                            <option value="الإعاقة البصرية">الإعاقة البصرية</option>
+                                                            <option value="الإعاقة السمعية">الإعاقة السمعية</option>
+                                                            <option value="اضطراب طيف توحد">اضطراب طيف توحد</option>
+                                                            <option value="الإعاقات المزدوجة">الإعاقات المزدوجة</option>
+                                                            <option value="الإعاقات المتعددة">الإعاقات المتعددة</option>
+                                                            <option value="اضطرابات النطق واللغة">اضطرابات النطق واللغة</option>
+                                                            <option value="الإعاقة الذهنية ومتلازماتها">الإعاقة الذهنية ومتلازماتها</option>
+                                                            <option value="الفئة البينية - بطء التعلم">الفئة البينية - بطء التعلم</option>
+                                                            <option value="اضطرابات نقص الانتباه وفرط الحركة">اضطرابات نقص الانتباه وفرط الحركة</option>
+                                                            <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
+                                                            <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
+                                                            <option value="الصحة المدرسية">الصحة المدرسية</option>
+                                                            <option value="مستشفى سدرة">مستشفى سدرة</option>
+                                                            <option value="مستشفى الرميلة">مستشفى الرميلة</option>
+                                                            <option value="مستشفى حمد العام">مستشفى حمد العام</option>
+                                                            <option value="عيادات خارج الدولة">عيادات خارج الدولة</option>
+                                                            <option value="عيادات خاصة داخل الدولة">عيادات خاصة داخل الدولة</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,8 +393,11 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">الحالة :</label>
-                                                    <div class="col-sm-7">
-                                                        <input type="text" id="stat" class="form-control" />
+                                                    <div class="col-sm-7 position-relative">
+                                                        <select id="stat" class="form-control custom-select">
+                                                            <option value="واضح"> واضح </option>
+                                                            <option value="غير واضح"> غير واضح</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>

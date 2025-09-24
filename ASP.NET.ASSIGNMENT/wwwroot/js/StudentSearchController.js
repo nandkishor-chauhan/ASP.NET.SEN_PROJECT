@@ -17,7 +17,7 @@ $(document).ready(function () {
         }
     });
 
-    // ✅ apply filters whenever user types
+    //  apply filters whenever user types
     $("#filter-qatar-id, #filter-fullname, #filter-phone").on("keyup change", function () {
         renderTable(allStudents);
     });
@@ -27,12 +27,12 @@ function renderTable(students) {
     let tbody = $("#student-table-body");
     tbody.empty();
 
-    // ✅ take filter values
+    //  take filter values
     let idFilter = $("#filter-qatar-id").val().toLowerCase();
     let nameFilter = $("#filter-fullname").val().toLowerCase();
     let phoneFilter = $("#filter-phone").val().toLowerCase();
 
-    // ✅ filter data
+    //  filter data
     let filtered = students.filter(s => {
         let matchId = !idFilter || (s.qatarID && s.qatarID.toString().toLowerCase().includes(idFilter));
         let matchName = !nameFilter || (s.fullName && s.fullName.toLowerCase().includes(nameFilter));
@@ -45,7 +45,7 @@ function renderTable(students) {
         return matchId && matchName && matchPhone;
     });
 
-    // ✅ render filtered rows
+    //  render filtered rows
     filtered.forEach(function (student, index) {
         let row = `
             <tr data-qatarid="${student.qatarID}" class="clickable-row">
@@ -57,7 +57,7 @@ function renderTable(students) {
         tbody.append(row);
     });
 
-    // ✅ make rows clickable
+    //  make rows clickable
     $(".clickable-row").css("cursor", "pointer");
     $(".clickable-row").on("click", function () {
         let studentId = $(this).data("qatarid");

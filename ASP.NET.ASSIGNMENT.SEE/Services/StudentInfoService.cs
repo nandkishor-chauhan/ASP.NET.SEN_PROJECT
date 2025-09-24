@@ -35,6 +35,10 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.QatarID,
                     x.Nationalty,
                     x.FullName,
+                    x.LevelSuport,
+                    x.MatherPhone,
+                    x.EntryStatus,
+                    x.Grade,
                 })
                 .ToListAsync())
                 .Select(x => new
@@ -43,8 +47,30 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.QatarID,
                     x.Nationalty,
                     x.FullName,
+                    x.LevelSuport,
+                    x.MatherPhone,
+                    x.EntryStatus,
+                    x.Grade
                 })
                 .ToList();
+        }
+
+        public async Task<IEnumerable<object>> GetSchoolNameList()
+        {
+            return await _unitOfWork.StudentInfoRepository
+                .Get()
+                .Select(x => new { x.formerSchool })
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<object>> GetGradeNameList()
+        {
+            return await _unitOfWork.StudentInfoRepository
+                .Get()
+                .Select(x => new { x.Grade })
+                .Distinct()
+                .ToListAsync();
         }
 
 

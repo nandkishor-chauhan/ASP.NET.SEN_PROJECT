@@ -364,3 +364,26 @@ h6 {
 .dropdown-menu > li > a:hover {
     --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
 }
+
+
+.custom-select {
+    appearance: none; /* remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 25px; /* space for custom arrow */
+}
+
+    .custom-select::-ms-expand {
+        display: none; /* hide arrow in IE */
+    }
+
+.position-relative::after {
+    content: "▾"; /* custom arrow */
+    font-size: 25px;
+    color: #555;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* click passes through */
+}
