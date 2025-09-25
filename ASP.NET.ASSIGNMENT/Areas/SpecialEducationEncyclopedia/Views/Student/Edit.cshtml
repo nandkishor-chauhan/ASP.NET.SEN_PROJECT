@@ -58,19 +58,9 @@
                     <div class="filter-section mt-5">
                         <div class="row">
                             <div class="col-12 d-grid gap-2">
-
-                                <button id="btn-save-add" class="btn btn-secondary w-100" onclick="saveStudent()" disabled>
-                                    حفظ وإضافة Save
-                                </button>
-
-                                <button id="btn-save-finish" class="btn btn-success w-100" disabled>
-                                    حفظ وانهاء
-                                </button>
-
-                                <button id="btn-delete" class="btn btn-danger w-100" disabled>
-                                    إلغاء
-                                </button>
-
+                                <button class="btn btn-secondary w-100" onclick="saveStudent()">حفظ وإضافة Save</button>
+                                <button class="btn btn-success w-100">حفظ وانهاء</button>
+                                <button class="btn btn-danger w-100"> إلغاء</button>
                             </div>
                         </div>
                     </div>
@@ -84,7 +74,7 @@
                     <div class="content-heading">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Student | New</h4>
+                                <h4 id="student-fullname">Student | New</h4>
                             </div>
                         </div>
                     </div>
@@ -102,28 +92,28 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">المدينة:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="student-city" class="form-control" disabled />
+                                            <input type="text" id="student-city" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="student-zone" class="form-control" disabled />
+                                            <input type="text" id="student-zone" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="student-street" class="form-control" disabled />
+                                            <input type="text" id="student-street" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="student-home" class="form-control" disabled />
+                                            <input type="text" id="student-home" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +126,7 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
                                         <div class="col-sm-8">
-                                            <input type="number" id="father-phone" class="form-control" disabled
+                                            <input type="number" id="father-phone" class="form-control"
                                                    oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
@@ -144,7 +134,7 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
                                         <div class="col-sm-8">
-                                            <input type="number" id="mother-phone" class="form-control" disabled
+                                            <input type="number" id="mother-phone" class="form-control"
                                                    oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
@@ -152,7 +142,7 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
                                         <div class="col-sm-8">
-                                            <input type="number" id="uncle-phone" class="form-control" disabled
+                                            <input type="number" id="uncle-phone" class="form-control"
                                                    oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
@@ -160,7 +150,7 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
                                         <div class="col-sm-8">
-                                            <input type="number" id="other-phone" class="form-control" disabled
+                                            <input type="number" id="other-phone" class="form-control"
                                                    oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
                                         </div>
                                     </div>
@@ -175,36 +165,36 @@
                                         <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
                                         <div class="col-sm-8">
                                             <input type="number" id="qatar-id" class="form-control"
-                                                   oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" 
-                                                   required/>
+                                                   oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" />
                                         </div>
                                     </div>
+
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="first-name" class="form-control" required disabled />
+                                            <input type="text" id="first-name" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="last-name" class="form-control" required disabled />
+                                            <input type="text" id="last-name" class="form-control"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="nationality" class="form-control" disabled />
+                                            <input type="text" id="nationality" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label text-start">الصف:</label>
                                         <div class="col-sm-3 position-relative">
-                                            <select id="grade" class="form-control custom-select" required disabled>
+                                            <select id="grade" class="form-control custom-select">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -222,7 +212,7 @@
 
                                         <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
                                         <div class="col-sm-3 position-relative">
-                                            <select id="division" class="form-control custom-select" disabled>
+                                            <select id="division" class="form-control custom-select">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -251,7 +241,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
                                                     <div class="col-sm-6 position-relative">
-                                                        <select id="support-level" class="form-control custom-select" required disabled>
+                                                        <select id="support-level" class="form-control custom-select">
                                                             <option value="1">1</option>
                                                             <option value="2">2</option>
                                                             <option value="3">3</option>
@@ -263,19 +253,21 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
                                                     <div class="col-sm-4 position-relative">
-                                                        <select id="previous-support-level" class="form-control custom-select" disabled>
+                                                        <select id="previous-support-level" class="form-control custom-select">
                                                             <option value="1">1</option>
                                                             <option value="2">2</option>
                                                             <option value="3">3</option>
                                                         </select>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
                                                     <div class="col-sm-8 position-relative">
-                                                        <select id="entry-status" class="form-control custom-select" required disabled>
+                                                        <select id="entry-status" class="form-control custom-select">
                                                             <option value="Supported">غير مقيد بالدعم</option>
                                                             <option value="Not Supported">مقيد بالدعم</option>
                                                         </select>
@@ -286,7 +278,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label text-danger">المدرسة السابقة:</label>
                                             <div class="col-sm-6 position-relative">
-                                                <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)" disabled>
+                                                <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)">
                                                     <option value="">اختر المدرسة</option>
                                                     <option value="Other">New School</option>
                                                 </select>
@@ -305,7 +297,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="date" id="date-of-birth" class="form-control" disabled />
+                                                        <input type="date" id="date-of-birth" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,7 +305,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="date" id="date-of-registration" class="form-control" disabled />
+                                                        <input type="date" id="date-of-registration" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -321,7 +313,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="date" id="report-date" class="form-control" disabled />
+                                                        <input type="date" id="report-date" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -329,7 +321,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start"> شدة :</label>
                                                     <div class="col-sm-8 position-relative">
-                                                        <select id="severity" class="form-control custom-select" disabled>
+                                                        <select id="severity" class="form-control custom-select">
                                                             <option value="بسيط">بسيط</option>
                                                             <option value="متوسطة">متوسطة</option>
                                                             <option value="شديدة">شديدة</option>
@@ -345,7 +337,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" id="health-number" class="form-control" disabled />
+                                                        <input type="text" id="health-number" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -353,7 +345,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="diagnosis" class="form-control" disabled />
+                                                        <input type="text" id="diagnosis" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,7 +353,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
                                                     <div class="col-sm-8 position-relative">
-                                                        <select id="type-of-disability" class="form-control text-danger custom-select" disabled>
+                                                        <select id="type-of-disability" class="form-control text-danger custom-select">
                                                             <option value="صعوبات تعلم">صعوبات تعلم</option>
                                                             <option value="مشكلات التعلم">مشكلات التعلم</option>
                                                             <option value="الإعاقة الجسدية">الإعاقة الجسدية</option>
@@ -391,7 +383,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">IQ :</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="iq" class="form-control" disabled />
+                                                        <input type="text" id="iq" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,7 +394,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-5 col-form-label">الحالة :</label>
                                                     <div class="col-sm-7 position-relative">
-                                                        <select id="stat" class="form-control custom-select" disabled>
+                                                        <select id="stat" class="form-control custom-select">
                                                             <option value="واضح"> واضح </option>
                                                             <option value="غير واضح"> غير واضح</option>
                                                         </select>
@@ -413,7 +405,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" id="report-source" class="form-control" disabled />
+                                                        <input type="text" id="report-source" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -427,7 +419,7 @@
                                         الوصف حسب التقييم
                                     </div>
                                     <div class="card-body">
-                                        <textarea id="case-description" class="col-sm-12 h-100" disabled></textarea>
+                                        <textarea id="case-description" class="col-sm-12 h-100"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +431,7 @@
     </div>
 
     @section Scripts {
-        <script src="~/js/StudentCreateController.js"></script>
+        <script src="~/js/StudentController.js"></script>
     }
 </body>
 </html>

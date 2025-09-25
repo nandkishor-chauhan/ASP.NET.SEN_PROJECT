@@ -325,7 +325,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label text-danger"> المدرسة السابق:</label>
                                             <div class="col-sm-6">
-                                                <span id="former-school" class="form-control"></span>
+                                                <input type="text" id="former-school" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
@@ -356,7 +356,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
                                                     <div class="col-sm-8">
-                                                        <span id="report-date" class="form-control"></span>
+                                                        <h6 id="report-date" class="form-control"></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -469,8 +469,10 @@
 
                 <!-- Footer Buttons -->
                 <div class="d-flex flex-wrap gap-2 footer-buttons mt-3" dir="rtl">
+                    <button class="btn btn-secondary" onclick="">Next</button>
+                    <button class="btn btn-secondary" onclick="">Previous</button>
                     <a asp-controller="Student" asp-action="Create" class="btn btn-primary">New</a>
-                    <button class="btn btn-secondary">Edit</button>
+                    <a asp-controller="Student" asp-action="Edit" class="btn btn-secondary">Edit</a>
                     <button class="btn btn-danger" onclick="confirmDelete()">حذف Delete</button>
                     <button class="btn btn-primary" onclick="uploadFiles()">Upload</button>
                 </div>

@@ -59,8 +59,6 @@ function toggleOtherSchool(select) {
     }
 }
 
-
-
 $(document).ready(function () {
     $.ajax({
         url: '/SpecialEducationEncyclopedia/Student/Get',
@@ -97,7 +95,7 @@ $(document).ready(function () {
 
 function applyFilters() {
     let selectedLevel = $("input[name='supportLevel']:checked").val() || "All";
-    let selectedStatus = $("input[name='entry-status']:checked").val() || "";
+    let selectedStatus = $("input[name='entry-status']:checked").val();
 
     let selectedGrades = [];
     $("input[name='gradeFilter']:checked").each(function () {

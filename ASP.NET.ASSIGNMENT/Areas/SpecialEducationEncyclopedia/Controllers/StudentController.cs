@@ -27,6 +27,10 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         {
             return View();
         }
+        public IActionResult Edit()
+        {
+            return View();
+        }
         public IActionResult Search()
         {
             return View();

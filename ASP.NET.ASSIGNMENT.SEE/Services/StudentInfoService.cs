@@ -37,6 +37,9 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.FullName,
                     x.LevelSuport,
                     x.MatherPhone,
+                    x.FatherPhone,
+                    x.UncalPhone,
+                    x.OtherPhone,
                     x.EntryStatus,
                     x.Grade,
                 })
@@ -49,6 +52,9 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.FullName,
                     x.LevelSuport,
                     x.MatherPhone,
+                    x.FatherPhone,
+                    x.UncalPhone,
+                    x.OtherPhone,
                     x.EntryStatus,
                     x.Grade
                 })

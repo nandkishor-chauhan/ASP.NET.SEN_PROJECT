@@ -23,16 +23,45 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    //  Reset other filters when typing
+    $("#filter-qatar-id").on("input", function () {
+        if ($(this).val().trim() !== "") {
+            $("#filter-fullname").val("");
+            $("#filter-phone").val("");
+        }
+        renderTable(allStudents); // refresh table
+    });
+
+    $("#filter-fullname").on("input", function () {
+        if ($(this).val().trim() !== "") {
+            $("#filter-qatar-id").val("");
+            $("#filter-phone").val("");
+        }
+        renderTable(allStudents);
+    });
+
+    $("#filter-phone").on("input", function () {
+        if ($(this).val().trim() !== "") {
+            $("#filter-qatar-id").val("");
+            $("#filter-fullname").val("");
+        }
+        renderTable(allStudents);
+    });
+});
+
+
 function renderTable(students) {
     let tbody = $("#student-table-body");
     tbody.empty();
 
-    //  take filter values
+    // 🔹 take filter values
     let idFilter = $("#filter-qatar-id").val().toLowerCase();
     let nameFilter = $("#filter-fullname").val().toLowerCase();
     let phoneFilter = $("#filter-phone").val().toLowerCase();
+    let statusFilter = $("input[name='entry-status']:checked").val(); // Supported / Not Supported
 
-    //  filter data
+    // 🔹 filter data
     let filtered = students.filter(s => {
         let matchId = !idFilter || (s.qatarID && s.qatarID.toString().toLowerCase().includes(idFilter));
         let matchName = !nameFilter || (s.fullName && s.fullName.toLowerCase().includes(nameFilter));
@@ -42,22 +71,28 @@ function renderTable(students) {
             (s.uncalPhone && s.uncalPhone.toLowerCase().includes(phoneFilter)) ||
             (s.otherPhone && s.otherPhone.toLowerCase().includes(phoneFilter))
         );
-        return matchId && matchName && matchPhone;
+        let matchStatus = !statusFilter || (s.entryStatus && s.entryStatus === statusFilter);
+
+        return matchId && matchName && matchPhone && matchStatus;
+
     });
 
-    //  render filtered rows
+    // render filtered rows
     filtered.forEach(function (student, index) {
         let row = `
             <tr data-qatarid="${student.qatarID}" class="clickable-row">
-                <td>${student.qatarID}</td>
+                <td>${student.nationalty}</td>
                 <td>${student.fullName}</td>
-                <td>${index+1}</td>
+                <td>${index + 1}</td>
             </tr>
         `;
         tbody.append(row);
     });
 
-    //  make rows clickable
+    // 🔹 update student count
+    $("#student-count").text(filtered.length);
+
+    // make rows clickable
     $(".clickable-row").css("cursor", "pointer");
     $(".clickable-row").on("click", function () {
         let studentId = $(this).data("qatarid");
@@ -69,6 +104,12 @@ function renderTable(students) {
         getStudentById(studentId);
     });
 }
+
+$(document).on("change", "input[name='entry-status']", function () {
+    renderTable(allStudents); // assuming allStudents is your full list
+    
+});
+
 
 
 function confirmDelete() {
@@ -87,46 +128,47 @@ function getStudentById(qatarID) {
             if (response.success) {
                 let student = response.data;
 
+
                 $("#student-fullname").text(student.fullName);
 
                 // Address Information
-                $("#student-city").val(student.city || "");
-                $("#student-zone").val(student.zoneNumber || "");
-                $("#student-street").val(student.streetNumber || "");
-                $("#student-home").val(student.homeNumber || "");
+                $("#student-city").text(student.city || "");
+                $("#student-zone").text(student.zoneNumber || "");
+                $("#student-street").text(student.streetNumber || "");
+                $("#student-home").text(student.homeNumber || "");
 
                 // Contact Information
-                $("#father-phone").val(student.fatherPhone || "");
-                $("#mother-phone").val(student.matherPhone || "");
-                $("#uncle-phone").val(student.uncalPhone || "");
-                $("#other-phone").val(student.otherPhone || "");
+                $("#father-phone").text(student.fatherPhone || "");
+                $("#mother-phone").text(student.matherPhone || "");
+                $("#uncle-phone").text(student.uncalPhone || "");
+                $("#other-phone").text(student.otherPhone || "");
 
                 // Personal Information
-                $("#qatar-id").val(student.qatarID || "");
-                $("#first-name").val(student.firstName || "");
-                $("#last-name").val(student.lastName || "");
-                $("#nationality").val(student.nationalty || "");
-                $("#grade").val(student.grade || "");
-                $("#division").val(student.division || "");
+                $("#qatar-id").text(student.qatarID || "");
+                $("#first-name").text(student.firstName || "");
+                $("#last-name").text(student.lastName || "");
+                $("#nationality").text(student.nationalty || "");
+                $("#grade").text(student.grade || "");
+                $("#division").text(student.division || "");
 
-                $("#support-level").val(student.levelSuport || "");
-                $("#previous-support-level").val(student.formerLevel || "");
-                $("#entry-status").val(student.entryStatus || "");
-                $("#former-school").val(student.formerSchool || "");
+                $("#support-level").text(student.levelSuport || "");
+                $("#previous-support-level").text(student.formerLevel || "");
+                $("#entry-status").text(student.entryStatus || "");
+                $("#former-school").text(student.formerSchool || "");
 
-                $("#date-of-birth").val(student.dateOfBirth || "");
-                $("#date-of-registration").val(student.dateOfRegistration || "");
-                $("#report-date").val(student.reportDate || "");
-                $("#severity").val(student.severity || "");
+                $("#date-of-birth").text(student.dateOfBirth || "");
+                $("#date-of-registration").text(student.dateOfRegistration || "");
+                $("#report-date").text(student.reportDate || "");
+                $("#severity").text(student.severity || "");
 
-                $("#health-number").val(student.healthNumber || "");
-                $("#diagnosis").val(student.diagnosis || "");
-                $("#type-of-disability").val(student.typeOfDisability || "");
-                $("#iq").val(student.iq || "");
-                $("#stat").val(student.stat || "");
-                $("#report-source").val(student.reportSource || "");
+                $("#health-number").text(student.healthNumber || "");
+                $("#diagnosis").text(student.diagnosis || "");
+                $("#type-of-disability").text(student.typeOfDisability || "");
+                $("#iq").text(student.iq || "");
+                $("#stat").text(student.stat || "");
+                $("#report-source").text(student.reportSource || "");
 
-                $("#case-description").val(student.caseDescription || "");
+                $("#case-description").text(student.caseDescription || "");
 
 
                 //console.log("Selected student:", student);
