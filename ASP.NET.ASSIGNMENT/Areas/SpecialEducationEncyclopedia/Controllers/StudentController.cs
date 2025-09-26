@@ -27,7 +27,7 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int qatarID)
         {
             return View();
         }
@@ -37,111 +37,107 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<JsonResult> Create(StudentInformation viewModel, IFormFile? file)
+        {
+            var student = new StudentInformation
+            {
+                // QatarID = viewModel.QatarID,
+                FirstName = viewModel.FirstName,
+                LastName = viewModel.LastName,
+                FullName = viewModel.FirstName + " " + viewModel.LastName,
+                Nationalty = viewModel.Nationalty,
+                Grade = viewModel.Grade,
+                Division = viewModel.Division,
+                FatherPhone = viewModel.FatherPhone,
+                MatherPhone = viewModel.MatherPhone,
+                UncalPhone = viewModel.UncalPhone,
+                OtherPhone = viewModel.OtherPhone,
+                HomeNumber = viewModel.HomeNumber,
+                StreetNumber = viewModel.StreetNumber,
+                ZoneNumber = viewModel.ZoneNumber,
+                City = viewModel.City,
+                HealthNumber = viewModel.HealthNumber,
+                DateOfBirth = viewModel.DateOfBirth,
+                DateOfRegistration = viewModel.DateOfRegistration,
+                TypeOfDisability = viewModel.TypeOfDisability,
+                Severity = viewModel.Severity,
+                LevelSuport = viewModel.LevelSuport,
+                Stat = viewModel.Stat,
+                Diagnosis = viewModel.Diagnosis,
+                CaseDescription = viewModel.CaseDescription,
+                IQ = viewModel.IQ,
+                DateOfClose = viewModel.DateOfClose,
+                ReasonRorClosing = viewModel.ReasonRorClosing,
+                EntryStatus = viewModel.EntryStatus,
+                formerSchool = viewModel.formerSchool,
+                formerLevel = viewModel.formerLevel,
+                ReportSource = viewModel.ReportSource,
+                ReportDate = viewModel.ReportDate,
+                Instr_W_St = viewModel.Instr_W_St
+            };
 
+            await _studentInfoService.Create(student);
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int qatarID)
-        //{
-        //    var existingStudent = await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
-        //    if (existingStudent == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(existingStudent);
-        //}
+            return Json(new { success = true, message = "Student updated successfully." });
+        }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(StudentInformation viewModel, IFormFile? file)
+        public async Task<JsonResult> Edit(StudentInformation viewModel)
         {
-            //string wwwRootPath = _webHostEnvironment.WebRootPath;
-            //if (file != null)
-            //{
-            //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            //    string productPath = Path.Combine(wwwRootPath, @"images\property");
+            if (viewModel.QatarID == 0)
+            {
+                return Json(new { success = false, error = "QatarID is required for editing." });
+            }
 
-            //    if (!string.IsNullOrEmpty(viewModel.ImageUrl))
-            //    {
-            //        //delete oldImage
-            //        var oldImagePath =
-            //            Path.Combine(wwwRootPath, viewModel.ImageUrl.TrimStart('\\'));
+            var existingStudent = await _studentInfoService.GetById(viewModel.QatarID)
+                ?? throw new Exception("Department Id does not exist");
 
-            //        if (System.IO.File.Exists(oldImagePath))
-            //        {
-            //            System.IO.File.Delete(oldImagePath);
-            //        }
-            //    }
+            if (existingStudent != null)
+            {
+                existingStudent.FirstName = viewModel.FirstName;
+                existingStudent.LastName = viewModel.LastName;
+                existingStudent.FullName = viewModel.FirstName + " "+ viewModel.LastName;
+                existingStudent.Nationalty = viewModel.Nationalty;
+                existingStudent.Grade = viewModel.Grade;
+                existingStudent.Division = viewModel.Division;
+                existingStudent.FatherPhone = viewModel.FatherPhone;
+                existingStudent.MatherPhone = viewModel.MatherPhone;
+                existingStudent.UncalPhone = viewModel.UncalPhone;
+                existingStudent.OtherPhone = viewModel.OtherPhone;
+                existingStudent.HomeNumber = viewModel.HomeNumber;
+                existingStudent.StreetNumber = viewModel.StreetNumber;
+                existingStudent.ZoneNumber = viewModel.ZoneNumber;
+                existingStudent.City = viewModel.City;
+                existingStudent.HealthNumber = viewModel.HealthNumber;
+                existingStudent.DateOfBirth = viewModel.DateOfBirth;
+                existingStudent.DateOfRegistration = viewModel.DateOfRegistration;
+                existingStudent.TypeOfDisability = viewModel.TypeOfDisability;
+                existingStudent.Severity = viewModel.Severity;
+                existingStudent.LevelSuport = viewModel.LevelSuport;
+                existingStudent.Stat = viewModel.Stat;
+                existingStudent.Diagnosis = viewModel.Diagnosis;
+                existingStudent.CaseDescription = viewModel.CaseDescription;
+                existingStudent.IQ = viewModel.IQ;
+                existingStudent.DateOfClose = viewModel.DateOfClose;
+                existingStudent.ReasonRorClosing = viewModel.ReasonRorClosing;
+                existingStudent.EntryStatus = viewModel.EntryStatus;
+                existingStudent.formerSchool = viewModel.formerSchool;
+                existingStudent.formerLevel = viewModel.formerLevel;
+                existingStudent.ReportSource = viewModel.ReportSource;
+                existingStudent.ReportDate = viewModel.ReportDate;
+                existingStudent.Instr_W_St = viewModel.Instr_W_St;
 
-            //    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-            //    {
-            //        file.CopyTo(fileStream);
-            //    }
-            //    viewModel.ImageUrl = @"\images\property\" + fileName;
-            //}
+                await _studentInfoService.Edit(existingStudent);
+            }
 
-          
-                var student = new StudentInformation
-                {
-                   // QatarID = viewModel.QatarID,
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName,
-                    FullName = viewModel.FirstName + viewModel.LastName,
-                    Nationalty = viewModel.Nationalty,
-                    Grade = viewModel.Grade,
-                    Division = viewModel.Division,
-                    FatherPhone = viewModel.FatherPhone,
-                    MatherPhone = viewModel.MatherPhone,
-                    UncalPhone = viewModel.UncalPhone,
-                    OtherPhone = viewModel.OtherPhone,
-                    HomeNumber = viewModel.HomeNumber,
-                    StreetNumber = viewModel.StreetNumber,
-                    ZoneNumber = viewModel.ZoneNumber,
-                    City = viewModel.City,
-                    HealthNumber = viewModel.HealthNumber,
-                    DateOfBirth = viewModel.DateOfBirth,
-                    DateOfRegistration = viewModel.DateOfRegistration,
-                    TypeOfDisability = viewModel.TypeOfDisability,
-                    Severity = viewModel.Severity,
-                    LevelSuport = viewModel.LevelSuport,
-                    Stat = viewModel.Stat,
-                    Diagnosis = viewModel.Diagnosis,
-                    CaseDescription = viewModel.CaseDescription,
-                    IQ = viewModel.IQ,
-                    DateOfClose = viewModel.DateOfClose,
-                    ReasonRorClosing = "hfjsh",
-                    EntryStatus = viewModel.EntryStatus,
-                    formerSchool = viewModel.formerSchool,
-                    formerLevel = viewModel.formerLevel,
-                    ReportSource = viewModel.ReportSource,
-                    ReportDate = viewModel.ReportDate,
-                    Instr_W_St = "hhh"
-                };
-
-                TempData["success"] = "Property created successfully";
-                await _studentInfoService.Create(student);
-           
-            return RedirectToAction("Index");
-            /*   else
-               {
-                   var existingProperty = _unitOfWork.PropertyRepository.Get(x => x.Id == viewModel.Id).FirstOrDefault();
-                   if (existingProperty != null)
-                   {
-                       existingProperty.PropertyType = viewModel.PropertyType;
-                       existingProperty.Description = viewModel.Description;
-                       existingProperty.Price = viewModel.Price;
-                       existingProperty.Location = viewModel.Location;
-                       existingProperty.Features = viewModel.Features;
-
-                       if (viewModel.ImageUrl != null)
-                       {
-                           existingProperty.ImageUrl = viewModel.ImageUrl;
-                       }
-
-                       await _propertyService.Edit(existingProperty);
-                   }
-               }
-               return RedirectToAction("Index");*/
+            return Json(new { success = true, message = "Student updated successfully." });
         }
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> UploadFiles(int studentId, List<IFormFile> files)
@@ -222,7 +218,7 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         {
             try
             {
-                var existingStudent = await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
+                var existingStudent = await _studentInfoService.GetById(qatarID);
 
                 if (existingStudent == null)
                 {
@@ -235,35 +231,39 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
                     existingStudent.FirstName,
                     existingStudent.LastName,
                     existingStudent.FullName,
-                    existingStudent.Nationalty,
+                    Nationalty = existingStudent.Nationalty ?? "",
                     existingStudent.Grade,
-                    existingStudent.Division,
-                    existingStudent.FatherPhone,
-                    existingStudent.MatherPhone,
-                    existingStudent.UncalPhone,
-                    existingStudent.OtherPhone,
-                    existingStudent.HomeNumber,
-                    existingStudent.StreetNumber,
-                    existingStudent.ZoneNumber,
-                    existingStudent.City,
-                    existingStudent.HealthNumber,
-                    existingStudent.DateOfBirth,
-                    existingStudent.DateOfRegistration,
-                    existingStudent.TypeOfDisability,
-                    existingStudent.Severity,
+                    Division = existingStudent.Division ?? "",
+                    FatherPhone = existingStudent.FatherPhone ?? "",
+                    MatherPhone = existingStudent.MatherPhone ?? "",
+                    UncalPhone = existingStudent.UncalPhone ?? "",
+                    OtherPhone = existingStudent.OtherPhone ?? "",
+                    HomeNumber = existingStudent.HomeNumber ?? "",
+                    StreetNumber = existingStudent.StreetNumber ?? "",
+                    ZoneNumber = existingStudent.ZoneNumber ?? "",
+                    City = existingStudent.City ?? "",
+                    HealthNumber = existingStudent.HealthNumber ?? "",
+                    TypeOfDisability = existingStudent.TypeOfDisability ?? "",
+                    Severity = existingStudent.Severity ?? "",
                     existingStudent.LevelSuport,
-                    existingStudent.Stat,
-                    existingStudent.Diagnosis,
-                    existingStudent.CaseDescription,
+                    Stat = existingStudent.Stat ?? "",
+                    Diagnosis = existingStudent.Diagnosis ?? "",
+                    CaseDescription = existingStudent.CaseDescription ?? "",
                     existingStudent.IQ,
-                    existingStudent.DateOfClose,
-                    existingStudent.ReasonRorClosing,
+                    ReasonRorClosing = existingStudent.ReasonRorClosing ?? "",
                     existingStudent.EntryStatus,
-                    existingStudent.formerSchool,
-                    existingStudent.formerLevel,
-                    existingStudent.ReportSource,
-                    existingStudent.ReportDate,
-                    existingStudent.Instr_W_St
+                    formerSchool = existingStudent.formerSchool ?? "",
+                    formerLevel = existingStudent.formerLevel ?? "",
+                    ReportSource = existingStudent.ReportSource ?? "",
+                    Instr_W_St = existingStudent.Instr_W_St ?? "",
+
+                    DateOfBirth = existingStudent.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfRegistration = existingStudent.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfClose = existingStudent.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
+                    ReportDate = existingStudent.ReportDate?.ToString("yyyy-MM-dd") ?? "",
+
+
+
                 };
 
                 return Json(new { success = true, data = student });

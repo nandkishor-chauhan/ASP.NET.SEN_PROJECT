@@ -22,7 +22,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.DAL.Repository
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeProperties = "");
 
-        Task<TEntity?> GetByIdAsync(object id);
+        Task<TEntity> GetByIdAsync(object id);
 
         // Insert
         void Insert(TEntity entity);

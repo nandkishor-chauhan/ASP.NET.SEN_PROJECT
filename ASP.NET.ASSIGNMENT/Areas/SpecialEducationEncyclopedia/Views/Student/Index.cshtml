@@ -128,8 +128,11 @@
                     </div>
 
                     <div class="text-center mb-2">
-                        <button class="btn btn-success w-100">تحديث البيانات</button>
+                        <button class="btn btn-success w-100"> </button>
                     </div>
+                   @*  <div class="text-center mb-2">
+                        <button class="btn btn-success w-100">تحديث البيانات</button>
+                    </div> *@
 
                     <!-- Student list -->
                     <div class="student-table">
@@ -249,7 +252,7 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
                                         <div class="col-sm-8">
-                                            <span id="qatar-id" class="form-control"></span>
+                                            <input type="text" id="qatar-id" class="form-control" readonly/>
                                         </div>
                                     </div>
 
@@ -469,13 +472,16 @@
 
                 <!-- Footer Buttons -->
                 <div class="d-flex flex-wrap gap-2 footer-buttons mt-3" dir="rtl">
-                    <button class="btn btn-secondary" onclick="">Next</button>
-                    <button class="btn btn-secondary" onclick="">Previous</button>
-                    <a asp-controller="Student" asp-action="Create" class="btn btn-primary">New</a>
-                    <a asp-controller="Student" asp-action="Edit" class="btn btn-secondary">Edit</a>
-                    <button class="btn btn-danger" onclick="confirmDelete()">حذف Delete</button>
-                    <button class="btn btn-primary" onclick="uploadFiles()">Upload</button>
+                    <button class="btn btn-secondary flex-fill" onclick="nextStudent()">Next</button>
+                    <button class="btn btn-secondary flex-fill" onclick="prevStudent()">Previous</button>
+                    <a asp-controller="Student" asp-action="Create" class="btn btn-primary flex-fill">New</a>
+                    @* <a asp-controller="Student" asp-action="Edit" class="btn btn-secondary flex-fill">Edit</a> *@
+                    <a id="edit-button" class="btn btn-secondary flex-fill">Edit</a>
+
+                    <button class="btn btn-danger flex-fill" onclick="confirmDelete()">حذف Delete</button>
+                    <button class="btn btn-primary flex-fill" onclick="uploadFiles()">Upload</button>
                 </div>
+
             </div>
         </div>
     </div>

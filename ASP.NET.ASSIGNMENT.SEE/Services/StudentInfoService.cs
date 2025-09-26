@@ -3,11 +3,6 @@ using ASP.NET.ASSIGNMENT.SEE.IServices;
 using ASP.NET.ASSIGNMENT.SEE.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ASP.NET.ASSIGNMENT.SEE.Services
 {
@@ -15,7 +10,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
-        public StudentInfoService(UserManager<IdentityUser> userManager,IUnitOfWork unitOfWork)
+        public StudentInfoService(UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -31,32 +26,81 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                 .Get()
                 .Select(x => new
                 {
-                   // x.Id,
                     x.QatarID,
-                    x.Nationalty,
+                    x.FirstName,
+                    x.LastName,
                     x.FullName,
+                    Nationalty = x.Nationalty ??"",
+                    Grade = x.Grade ?? "",
+                    Division = x.Division ?? "",
+                    FatherPhone = x.FatherPhone ?? "",
+                    MatherPhone = x.MatherPhone ?? "",
+                    UncalPhone = x.UncalPhone ?? "",
+                    OtherPhone = x.OtherPhone ?? "",
+                    HomeNumber = x.HomeNumber ?? "",
+                    StreetNumber = x.StreetNumber ?? "",
+                    ZoneNumber = x.ZoneNumber ?? "",
+                    City = x.City ?? "",
+                    HealthNumber = x.HealthNumber ?? "",
+                    
+                    TypeOfDisability = x.TypeOfDisability ?? "",
+                    Severity = x.Severity ?? "",
                     x.LevelSuport,
-                    x.MatherPhone,
-                    x.FatherPhone,
-                    x.UncalPhone,
-                    x.OtherPhone,
-                    x.EntryStatus,
-                    x.Grade,
+                    Stat = x.Stat ?? "",
+                    Diagnosis = x.Diagnosis ?? "",
+                    CaseDescription = x.CaseDescription ?? "",
+                    x.IQ,
+                    ReasonRorClosing = x.ReasonRorClosing ?? "",
+                    EntryStatus = x.EntryStatus ?? "",
+                    formerSchool = x.formerSchool ?? "",
+                    formerLevel = x.formerLevel ?? "",
+                    ReportSource = x.ReportSource ?? "",
+                    Instr_W_S = x.Instr_W_St ?? "",
+
+                    x.DateOfBirth,
+                    x.DateOfRegistration,
+                    x.DateOfClose,
+                    x.ReportDate,
+
+
                 })
                 .ToListAsync())
                 .Select(x => new
                 {
-                   // x.Id,
                     x.QatarID,
-                    x.Nationalty,
+                    x.FirstName,
+                    x.LastName,
                     x.FullName,
-                    x.LevelSuport,
-                    x.MatherPhone,
+                    x.Nationalty,
+                    x.Grade,
+                    x.Division,
                     x.FatherPhone,
+                    x.MatherPhone,
                     x.UncalPhone,
                     x.OtherPhone,
+                    x.HomeNumber,
+                    x.StreetNumber,
+                    x.ZoneNumber,
+                    x.City,
+                    x.HealthNumber,
+                    x.TypeOfDisability,
+                    x.Severity,
+                    x.LevelSuport,
+                    x.Stat,
+                    x.Diagnosis,
+                    x.CaseDescription,
+                    x.IQ,
+                    x.ReasonRorClosing,
                     x.EntryStatus,
-                    x.Grade
+                    x.formerSchool,
+                    x.formerLevel,
+                    x.ReportSource,
+                    DateOfBirth = x.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfRegistration = x.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfClose = x.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
+                    ReportDate = x.ReportDate?.ToString("yyyy-MM-dd") ?? "",
+
+                    //x.Instr_W_St
                 })
                 .ToList();
         }
@@ -65,7 +109,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
         {
             return await _unitOfWork.StudentInfoRepository
                 .Get()
-                .Select(x => new { x.formerSchool })
+                .Select(x => new { formerSchool = x.formerSchool ?? "" })
                 .Distinct()
                 .ToListAsync();
         }
@@ -74,7 +118,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
         {
             return await _unitOfWork.StudentInfoRepository
                 .Get()
-                .Select(x => new { x.Grade })
+                .Select(x => new { Grade = x.Grade ?? "" })
                 .Distinct()
                 .ToListAsync();
         }
@@ -82,12 +126,10 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
 
         public async Task<StudentInformation> GetById(int qatarID)
         {
-            var studentInfo = await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
-
-            return studentInfo is null ? throw new KeyNotFoundException("Category with ID not found.") : studentInfo;
+            return await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
         }
 
-        
+
 
         public async Task<StudentInformation> Create(StudentInformation entity)
         {

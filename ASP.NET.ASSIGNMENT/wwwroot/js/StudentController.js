@@ -33,7 +33,7 @@ $(document).ready(function () {
                 // Add "All" option at the end
                 gradeContainer.append(`
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="gradeAll" value="All">
+                        <input class="form-check-input" type="checkbox" id="gradeAll" value="All" checked>
                         <label class="form-check-label" for="gradeAll">All</label>
                     </div>
                 `);
@@ -66,10 +66,12 @@ $(document).ready(function () {
         success: function (response) {
             if (response.success) {
                 allStudents = response.data;
-                renderTable(allStudents); // show all initially
+                //renderTable(allStudents); // show all initially
+
+                applyFilters(); // apply default filters (if any)
 
                 // show total count before filtering
-                $("#student-count").text(allStudents.length);
+                $("#student-count").text($("#student-table-body tr").length);
 
             } else {
                 alert("Error: " + response.error);
@@ -124,19 +126,25 @@ function applyFilters() {
 }
 
 
-// Render the student table
+let currentIndex = 0; // track selected row globally
+let selectedStudentId = null;
+
 function renderTable(students) {
     let tbody = $("#student-table-body");
     tbody.empty();
 
     if (students.length === 0) {
         tbody.append('<tr><td colspan="3" class="text-center text-danger">No Data Found</td></tr>');
+        clearPersonalInfo();
+        selectedStudentId = null;
+        $("#edit-button").attr("href", "#");
         return;
     }
 
+    // Populate table rows
     students.forEach(function (student, index) {
         let row = `
-            <tr data-qatarid="${student.qatarID}" class="clickable-row">
+            <tr data-index="${index}" data-qatarid="${student.qatarID}" class="clickable-row">
                 <td>${student.nationalty}</td>
                 <td>${student.fullName}</td>
                 <td>${index + 1}</td>
@@ -146,15 +154,152 @@ function renderTable(students) {
     });
 
     $(".clickable-row").css("cursor", "pointer");
+        
+    // Row click event
     $(".clickable-row").on("click", function () {
-        let studentId = $(this).data("qatarid");
-
-        $(".clickable-row").removeClass("table-active");
-        $(this).addClass("table-active");
-
-        getStudentById(studentId);
+        currentIndex = $(this).data("index");
+        selectRow(students, currentIndex);
     });
+
+    // 🔹 Auto-select the first row
+    currentIndex = 0;
+    selectRow(students, currentIndex);
 }
+
+// Helper to select a row
+function selectRow(students, index) {
+    $(".clickable-row").removeClass("table-active");
+
+    let row = $(`tr[data-index="${index}"]`);
+    row.addClass("table-active");
+
+    let student = students[index];
+    if (student) {
+        selectedStudentId = student.qatarID; // store selected student ID
+        fillPersonalInfo(student);
+
+        // Update Edit button href
+        $("#edit-button").attr("href", `/SpecialEducationEncyclopedia/Student/Edit?qatarID=${selectedStudentId}`);
+    }
+}
+
+// select row helper
+//function selectRow(students, index) {
+//    $(".clickable-row").removeClass("table-active");
+
+//    let row = $(`tr[data-index="${index}"]`);
+//    row.addClass("table-active");
+
+//    let student = students[index];
+//    if (student) {
+//        fillPersonalInfo(student);
+//    }
+//}
+
+// fill details
+function fillPersonalInfo(student) {
+
+    $("#student-fullname").text(student.fullName);
+
+    // Address Information
+    $("#student-city").text(student.city || "");
+    $("#student-zone").text(student.zoneNumber || "");
+    $("#student-street").text(student.streetNumber || "");
+    $("#student-home").text(student.homeNumber || "");
+
+    // Contact Information
+    $("#father-phone").text(student.fatherPhone || "");
+    $("#mother-phone").text(student.matherPhone || "");
+    $("#uncle-phone").text(student.uncalPhone || "");
+    $("#other-phone").text(student.otherPhone || "");
+
+    // Personal Information
+    $("#qatar-id").val(student.qatarID || "");
+    $("#first-name").text(student.firstName || "");
+    $("#last-name").text(student.lastName || "");
+    $("#nationality").text(student.nationalty || "");
+    $("#grade").text(student.grade || "");
+    $("#division").text(student.division || "");
+
+    $("#support-level").text(student.levelSuport || "");
+    $("#previous-support-level").text(student.formerLevel || "");
+    $("#entry-status").text(student.entryStatus || "");
+    $("#former-school").text(student.formerSchool || "");
+
+    $("#date-of-birth").text(student.dateOfBirth || "");
+    $("#date-of-registration").text(student.dateOfRegistration || "");
+    $("#report-date").text(student.reportDate || "");
+    $("#severity").text(student.severity || "");
+
+    $("#health-number").text(student.healthNumber || "");
+    $("#diagnosis").text(student.diagnosis || "");
+    $("#type-of-disability").text(student.typeOfDisability || "");
+    $("#iq").text(student.iq || "");
+    $("#stat").text(student.stat || "");
+    $("#report-source").text(student.reportSource || "");
+
+    $("#case-description").text(student.caseDescription || "");
+}
+
+function clearPersonalInfo() {
+
+    $("#student-fullname").text(student.fullName);
+
+    // Address Information
+    $("#student-city").text("");
+    $("#student-zone").text("");
+    $("#student-street").text("");
+    $("#student-home").text("");
+
+    // Contact Information
+    $("#father-phone").text("");
+    $("#mother-phone").text("");
+    $("#uncle-phone").text("");
+    $("#other-phone").text("");
+
+    // Personal Information
+    $("#qatar-id").val("");
+    $("#first-name").text("");
+    $("#last-name").text("");
+    $("#nationality").text("");
+    $("#grade").text("");
+    $("#division").text("");
+
+    $("#support-level").text("");
+    $("#previous-support-level").text("");
+    $("#entry-status").text("");
+    $("#former-school").text("");
+
+    $("#date-of-birth").text("");
+    $("#date-of-registration").text("");
+    $("#report-date").text("");
+    $("#severity").text("");
+
+    $("#health-number").text("");
+    $("#diagnosis").text("");
+    $("#type-of-disability").text("");
+    $("#iq").text("");
+    $("#stat").text("");
+    $("#report-source").text("");
+
+    $("#case-description").text("");
+}
+
+// Next / Previous buttons
+function nextStudent() {
+    if (currentIndex < allStudents.length - 1) {
+        currentIndex++;
+        selectRow(allStudents, currentIndex);
+    }
+}
+
+function prevStudent() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        selectRow(allStudents, currentIndex);
+    }
+}
+
 
 
 
@@ -189,7 +334,7 @@ function getStudentById(qatarID) {
                 $("#other-phone").text(student.otherPhone || "");
 
                 // Personal Information
-                $("#qatar-id").text(student.qatarID || "");
+                $("#qatar-id").val(student.qatarID || "");
                 $("#first-name").text(student.firstName || "");
                 $("#last-name").text(student.lastName || "");
                 $("#nationality").text(student.nationalty || "");

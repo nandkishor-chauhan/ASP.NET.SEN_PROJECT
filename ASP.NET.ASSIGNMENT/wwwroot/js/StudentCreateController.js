@@ -7,7 +7,6 @@ $(document).ready(function () {
         success: function (response) {
             if (response.success) {
                 let schoolList = response.data;
-                let gradeList = response.gradeNameList;
 
                 // Populate Former Schools
                 let select = $("#former-school");
@@ -16,27 +15,6 @@ $(document).ready(function () {
                 schoolList.forEach(school => {
                     select.append(`<option value="${school.formerSchool}">${school.formerSchool}</option>`);
                 });
-
-                // Populate Grade Checkboxes
-                let gradeContainer = $("#grade-container");
-                gradeContainer.empty(); // clear previous if any
-
-                gradeList.forEach(grade => {
-                    gradeContainer.append(`
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="gradeFilter" value="${grade.grade}">
-                            <label class="form-check-label">${grade.grade}</label>
-                        </div>
-                    `);
-                });
-
-                // Add "All" option at the end
-                gradeContainer.append(`
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="gradeAll" value="All">
-                        <label class="form-check-label" for="gradeAll">All</label>
-                    </div>
-                `);
 
             } else {
                 alert("Error: " + response.error);
@@ -55,10 +33,6 @@ $(document).ready(function () {
         success: function (response) {
             if (response.success) {
                 allStudents = response.data;
-                renderTable(allStudents); // show all initially
-
-                // show total count before filtering
-                $("#student-count").text(allStudents.length);
 
             } else {
                 alert("Error: " + response.error);
@@ -70,113 +44,127 @@ $(document).ready(function () {
     });
 });
 
-// Render the student table
-function renderTable(students) {
-    let tbody = $("#student-table-body");
-    tbody.empty();
-
-    if (students.length === 0) {
-        tbody.append('<tr><td colspan="3" class="text-center text-danger">No Data Found</td></tr>');
-        return;
-    }
-
-    students.forEach(function (student, index) {
-        let row = `
-            <tr data-qatarid="${student.qatarID}" class="clickable-row">
-                <td>${student.nationalty}</td>
-                <td>${student.fullName}</td>
-                <td>${index + 1}</td>
-            </tr>
-        `;
-        tbody.append(row);
-    });
-
-    $(".clickable-row").css("cursor", "pointer");
-    $(".clickable-row").on("click", function () {
-        let studentId = $(this).data("qatarid");
-
-        $(".clickable-row").removeClass("table-active");
-        $(this).addClass("table-active");
-
-        getStudentById(studentId);
-    });
-}
-
-
-
-function confirmDelete() {
-    if (confirm("هل أنت متأكد أنك تريد الحذف؟")) {
-        alert("تم الحذف بنجاح");
-    } else {
-        alert("تم إلغاء الحذف");
-    }
+function debounce(func, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
 }
 
 
 $(document).ready(function () {
-    // Disable all form fields except Qatar ID at start
     $("form :input").not("#qatar-id").prop("disabled", true);
 
-    // Helper to control buttons
     function toggleButtons(found) {
         if (found === true) {
-            // Student exists → only Delete enabled
             $("#btn-save-add, #btn-save-finish").prop("disabled", true);
             $("#btn-delete").prop("disabled", false);
         } else if (found === false) {
-            // Student not found → Save buttons enabled
             $("#btn-save-add, #btn-save-finish").prop("disabled", false);
             $("#btn-delete").prop("disabled", true);
         } else {
-            // Initial → all disabled
             $("#btn-save-add, #btn-save-finish, #btn-delete").prop("disabled", true);
         }
     }
 
-    // Start with all buttons disabled
     toggleButtons(null);
 
-    // When pressing Enter in Qatar ID
+    // 🔹 Search function
+    const searchStudent = debounce(function () {
+        let qatarID = parseInt($("#qatar-id").val(), 10);
+
+        if (isNaN(qatarID) || qatarID <= 0) {
+            resetFields(); // clear fields if invalid input
+            toggleButtons(null);
+            return;
+        }
+
+        let student = allStudents.find(s => s.qatarID === qatarID);
+
+        if (student) {
+            // Student exists
+            alert("Student ID already exists.");
+            $("form :input").not("#qatar-id").prop("disabled", true);
+            toggleButtons(true);
+
+            $("#first-name").val(student.firstName ?? "");
+            $("#last-name").val(student.lastName ?? "");
+            $("#grade").val(student.grade ?? "");
+            $("#support-level").val(student.levelSuport ?? "");
+            $("#entry-status").val(student.entryStatus ?? "");
+        } else {
+            // Student not found
+            alert("Student ID not found. Please enter details.");
+            $("form :input").not("#qatar-id").prop("disabled", false);
+            toggleButtons(false);
+
+            resetFields();
+        }
+    }, 1000); // 2-second delay
+
+    $("#qatar-id").on("input", searchStudent);
+
+    function resetFields() {
+        $("#first-name, #last-name, #grade, #support-level, #entry-status").val("");
+    }
+});
+
+
+/*$(document).ready(function () {
+    // Disable all form fields except Qatar ID at start
+    $("form :input").not("#qatar-id").prop("disabled", true);
+
+    function toggleButtons(found) {
+        if (found === true) {
+            $("#btn-save-add, #btn-save-finish").prop("disabled", true);
+            $("#btn-delete").prop("disabled", false);
+        } else if (found === false) {
+            $("#btn-save-add, #btn-save-finish").prop("disabled", false);
+            $("#btn-delete").prop("disabled", true);
+        } else {
+            $("#btn-save-add, #btn-save-finish, #btn-delete").prop("disabled", true);
+        }
+    }
+
+    toggleButtons(null);
+
     $("#qatar-id").on("keypress", function (e) {
         if (e.which === 13) {
             let qatarID = parseInt($(this).val(), 10);
 
             if (isNaN(qatarID) || qatarID <= 0) {
-                alert(" Please enter a valid Qatar ID.");
+                alert("Please enter a valid Qatar ID.");
                 return;
             }
 
-            $.ajax({
-                url: '/SpecialEducationEncyclopedia/Student/GetById?qatarID=' + qatarID,
-                type: 'GET',
-                success: function (res) {
-                    if (res.success && res.data) {
-                        // Student exists
-                        alert("Student ID already exists.");
-                        $("form :input").not("#qatar-id").prop("disabled", true);
-                        toggleButtons(true);
+            // 🔹 Search in already loaded students
+            let student = allStudents.find(s => s.qatarID === qatarID);
 
-                        // Example: populate fields
-                        $("#first-name").val(res.data.firstName);
-                        $("#last-name").val(res.data.lastName);
-                        $("#grade").val(res.data.grade);
-                        $("#support-level").val(res.data.levelSuport);
-                        $("#entry-status").val(res.data.entryStatus);
-                    } else {
-                        // Student not found
-                        alert("Student ID is Not Found. Please enter details.");
-                        $("form :input").not("#qatar-id").prop("disabled", false);
-                        toggleButtons(false);
-                    }
-                },
-                error: function () {
-                    alert(" Error fetching student data.");
-                }
-            });
+            if (student) {
+                alert("Student ID already exists.");
+                $("form :input").not("#qatar-id").prop("disabled", true);
+                toggleButtons(true);
+
+                // Populate fields from student object
+                $("#first-name").val(student.firstName ?? "");
+                $("#last-name").val(student.lastName ?? "");
+                $("#grade").val(student.grade ?? "");
+                $("#support-level").val(student.levelSuport ?? "");
+                $("#entry-status").val(student.entryStatus ?? "");
+            } else {
+                alert("Student ID not found. Please enter details.");
+                $("form :input").not("#qatar-id").prop("disabled", false);
+                toggleButtons(false);
+
+                // Clear input fields
+                $("#first-name, #last-name, #grade, #support-level, #entry-status").val("");
+            }
         }
     });
 });
 
+*/
 
 
 function saveStudent() {

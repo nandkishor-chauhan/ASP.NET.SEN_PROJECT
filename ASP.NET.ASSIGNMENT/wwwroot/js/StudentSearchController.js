@@ -50,19 +50,20 @@ $(document).ready(function () {
     });
 });
 
+let filteredStudents = []; // currently filtered data
+let selectedIndex = 0;
 
 function renderTable(students) {
     let tbody = $("#student-table-body");
     tbody.empty();
 
-    // 🔹 take filter values
     let idFilter = $("#filter-qatar-id").val().toLowerCase();
     let nameFilter = $("#filter-fullname").val().toLowerCase();
     let phoneFilter = $("#filter-phone").val().toLowerCase();
-    let statusFilter = $("input[name='entry-status']:checked").val(); // Supported / Not Supported
+    let statusFilter = $("input[name='entry-status']:checked").val();
 
-    // 🔹 filter data
-    let filtered = students.filter(s => {
+    // Filter data
+    filteredStudents = students.filter(s => {
         let matchId = !idFilter || (s.qatarID && s.qatarID.toString().toLowerCase().includes(idFilter));
         let matchName = !nameFilter || (s.fullName && s.fullName.toLowerCase().includes(nameFilter));
         let matchPhone = !phoneFilter || (
@@ -74,41 +75,133 @@ function renderTable(students) {
         let matchStatus = !statusFilter || (s.entryStatus && s.entryStatus === statusFilter);
 
         return matchId && matchName && matchPhone && matchStatus;
-
     });
 
-    // render filtered rows
-    filtered.forEach(function (student, index) {
+    // Render rows
+    filteredStudents.forEach((student, index) => {
         let row = `
-            <tr data-qatarid="${student.qatarID}" class="clickable-row">
-                <td>${student.nationalty}</td>
-                <td>${student.fullName}</td>
+            <tr data-index="${index}" class="clickable-row">
+                <td>${student.nationalty ?? ""}</td>
+                <td>${student.fullName ?? ""}</td>
                 <td>${index + 1}</td>
             </tr>
         `;
         tbody.append(row);
     });
 
-    // 🔹 update student count
-    $("#student-count").text(filtered.length);
+    $("#student-count").text(filteredStudents.length);
 
-    // make rows clickable
     $(".clickable-row").css("cursor", "pointer");
     $(".clickable-row").on("click", function () {
-        let studentId = $(this).data("qatarid");
-        console.log("StudentId is", studentId);
-
-        $(".clickable-row").removeClass("table-active");
-        $(this).addClass("table-active");
-
-        getStudentById(studentId);
+        selectedIndex = $(this).data("index");
+        selectRow(filteredStudents, selectedIndex); // ✅ use selectRow
     });
+
+    // Select first row by default or reset if empty
+    if (filteredStudents.length > 0) {
+        selectedIndex = 0;
+        selectRow(filteredStudents, selectedIndex);
+    } else {
+        resetStudentDisplay();
+        $("#edit-button").attr("href", "#"); // disable Edit button
+    }
 }
 
-$(document).on("change", "input[name='entry-status']", function () {
-    renderTable(allStudents); // assuming allStudents is your full list
-    
-});
+
+function selectRow(students, index) {
+    $(".clickable-row").removeClass("table-active");
+
+    let row = $(`tr[data-index="${index}"]`);
+    row.addClass("table-active");
+
+    let student = students[index];
+    if (student) {
+        selectedStudentId = student.qatarID; // store selected student ID
+        displayStudent(student);
+
+        // Update Edit button href
+        $("#edit-button").attr("href", `/SpecialEducationEncyclopedia/Student/Edit?qatarID=${selectedStudentId}`);
+    }
+}
+
+
+    function displayStudent(student) {
+    $("#student-fullname").text(student.fullName);
+
+    // Address Information
+    $("#student-city").text(student.city || "");
+    $("#student-zone").text(student.zoneNumber || "");
+    $("#student-street").text(student.streetNumber || "");
+    $("#student-home").text(student.homeNumber || "");
+
+    // Contact Information
+    $("#father-phone").text(student.fatherPhone || "");
+    $("#mother-phone").text(student.matherPhone || "");
+    $("#uncle-phone").text(student.uncalPhone || "");
+    $("#other-phone").text(student.otherPhone || "");
+
+    // Personal Information
+    $("#qatar-id").val(student.qatarID || "");
+    $("#first-name").text(student.firstName || "");
+    $("#last-name").text(student.lastName || "");
+    $("#nationality").text(student.nationalty || "");
+    $("#grade").text(student.grade || "");
+    $("#division").text(student.division || "");
+
+    $("#support-level").text(student.levelSuport || "");
+    $("#previous-support-level").text(student.formerLevel || "");
+    $("#entry-status").text(student.entryStatus || "");
+    $("#former-school").text(student.formerSchool || "");
+
+    $("#date-of-birth").text(student.dateOfBirth || "");
+    $("#date-of-registration").text(student.dateOfRegistration || "");
+    $("#report-date").text(student.reportDate || "");
+    $("#severity").text(student.severity || "");
+
+    $("#health-number").text(student.healthNumber || "");
+    $("#diagnosis").text(student.diagnosis || "");
+    $("#type-of-disability").text(student.typeOfDisability || "");
+    $("#iq").text(student.iq || "");
+    $("#stat").text(student.stat || "");
+    $("#report-source").text(student.reportSource || "");
+
+    $("#case-description").text(student.caseDescription || ""); 
+}
+
+function resetStudentDisplay() {
+    $("#qatar-id").text("");
+    $("#first-name").text("");
+    $("#last-name").text("");
+    $("#nationality").text("");
+    $("#grade").text("");
+    $("#division").text("");
+
+    $("#father-phone").text("");
+    $("#mother-phone").text("");
+    $("#uncle-phone").text("");
+    $("#other-phone").text("");
+
+    $("#student-city").text("");
+    $("#student-zone").text("");
+    $("#student-street").text("");
+    $("#student-home").text("");
+}
+
+
+function nextStudent() {
+    if (filteredStudents.length === 0) return;
+
+    selectedIndex = (selectedIndex + 1) % filteredStudents.length;
+    selectRow(filteredStudents, selectedIndex);
+}
+
+function prevStudent() {
+    if (filteredStudents.length === 0) return;
+
+    selectedIndex = (selectedIndex - 1 + filteredStudents.length) % filteredStudents.length;
+    selectRow(filteredStudents, selectedIndex);
+}
+
 
 
 
