@@ -1,462 +1,379 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيانات الطلاب</title>
-    <style>
-        .green-box {
-            background: #00b050;
-            color: #fff;
-            padding: 6px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
+﻿<div class="py-2">
 
-        .sidebar {
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 8px;
-        }
-
-            .sidebar h6 {
-                font-size: 40px;
-                margin-bottom: 5px;
-            }
-
-        .filter-section {
-            border: 1px solid #ccc;
-            padding: 8px;
-            margin-bottom: 10px;
-            background: #fdfdfd;
-        }
-
-            .filter-section label {
-                margin-left: 10px;
-            }
-
-        .student-table {
-            max-height: 350px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            background: #fff;
-        }
-
-            .student-table table {
-                font-size: 14px;
-            }
-
-        .footer-buttons button {
-            min-width: 120px;
-        }
-    </style>
-</head>
-<body>
-    <div class="py-2">
-
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-lg-3 mb-3">
-                <div class="sidebar">
-                    <!-- Filters -->
-                    <div class="filter-section">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="entry-status" id="entry-status1" value="Not Supported">
-                                    <label class="form-check-label text-danger" for="entry-status1">
-                                        غير مقيد بالدعم
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="entry-status" id="entry-status2" value="Supported" checked>
-                                    <label class="form-check-label" for="entry-status2">
-                                        مقيد بالدعم
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <label>
-                                    : حالة القيد
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-3">
+            <div class="sidebar">
+                <!-- Filters -->
+                <div class="filter-section">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="entry-status" id="entry-status1" value="Not Supported">
+                                <label class="form-check-label text-danger" for="entry-status1">
+                                    غير مقيد بالدعم
                                 </label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="filter-section">
-                        <div class="col-12" dir="rtl">
-                            <div class="form-group row mb-2">
-                                <div class="col-12">
-                                    <label class="col-form-label text-start">رقم الهوية الشخصية:(ID)</label>
-                                    <input type="text" id="filter-qatar-id" class="form-control" autofocus />
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-2">
-                                <div class="col-sm-12">
-                                    <label class="col-form-label text-start">اسم الطالب:(Name)</label>
-                                    <input type="text" id="filter-fullname" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-2">
-                                <div class="col-sm-12">
-                                    <label class="col-form-label text-start"> رقم الهاتف المحمو: (Mobile)</label>
-                                    <input type="text" id="filter-phone" class="form-control" />
-                                </div>
+                        <div class="col-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="entry-status" id="entry-status2" value="Supported" checked>
+                                <label class="form-check-label" for="entry-status2">
+                                    مقيد بالدعم
+                                </label>
                             </div>
                         </div>
-                    </div>
-
-
-                    <!-- Student list -->
-                    <div class="student-table">
-                        <table class="table table-bordered table-sm mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>الجنسية</th>
-                                    <th>اسم الطالب</th>
-                                    <th>سر</th>
-                                </tr>
-                            </thead>
-                            <tbody id="student-table-body">
-                                <!-- rows will be injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-center mt-2 text-danger">
-                        عدد الطلاب: <strong id="student-count">0</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main content -->
-            <div class="col-lg-9">
-                <div class="content">
-                    <div class="content-heading">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4 id="student-fullname"></h4>
-                            </div>
+                        <div class="col-4">
+                            <label>
+                                : حالة القيد
+                            </label>
                         </div>
-                    </div>
-
-                    <div class="content-body">
-                        <form method="post" enctype="multipart/form-data">
-                            @* <input asp-for="ImageUrl" hidden /> *@
-
-                            <!-- Address Information -->
-                            <div class="row">
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">بيانات العنوان :</label>
-                                    </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">المدينة:</label>
-                                        <div class="col-sm-8">
-                                            <span id="student-city" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
-                                        <div class="col-sm-8">
-                                            <span id="student-zone" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
-                                        <div class="col-sm-8">
-                                            <span id="student-street" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
-                                        <div class="col-sm-8">
-                                            <span id="student-home" class="form-control"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @*  contact Information *@
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">بيانات التواصل :</label>
-                                    </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
-                                        <div class="col-sm-8">
-                                            <span id="father-phone" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
-                                        <div class="col-sm-8">
-                                            <span id="mother-phone" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
-                                        <div class="col-sm-8">
-                                            <span id="uncle-phone" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
-                                        <div class="col-sm-8">
-                                            <span id="other-phone" class="form-control"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Personal Information -->
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">البيانات الشخصية:</label>
-                                    </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
-                                        <div class="col-sm-8">
-                                            <span id="qatar-id" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
-                                        <div class="col-sm-8">
-                                            <span id="first-name" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
-                                        <div class="col-sm-8">
-                                            <span id="last-name" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
-                                        <div class="col-sm-8">
-                                            <span id="nationality" class="form-control"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label text-start"> الصف:</label>
-                                        <div class="col-sm-3">
-                                            <span id="grade" class="form-control"></span>
-                                        </div>
-
-                                        <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
-                                        <div class="col-sm-3">
-                                            <span id="division" class="form-control"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @*   level *@
-
-                            <div class="" dir="rtl">
-                                <div class="content-body mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        حالة الملف
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
-                                                    <div class="col-sm-6">
-                                                        <span id="support-level" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
-                                                    <div class="col-sm-4">
-                                                        <span id="previous-support-level" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="entry-status" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label text-danger"> المدرسة السابق:</label>
-                                            <div class="col-sm-6">
-                                                <span id="former-school" class="form-control"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-body mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        البيانات الصحية
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
-                                                    <div class="col-sm-7">
-                                                        <span id="date-of-birth" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
-                                                    <div class="col-sm-7">
-                                                        <span id="date-of-registration" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="report-date" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start"> شدة :</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="severity" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
-                                                    <div class="col-sm-7">
-                                                        <span id="health-number" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="diagnosis" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="type-of-disability" class="form-control text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">IQ :</label>
-                                                    <div class="col-sm-8">
-                                                        <span id="iq" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">الحالة :</label>
-                                                    <div class="col-sm-7">
-                                                        <span id="stat" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
-                                                    <div class="col-sm-9">
-                                                        <span id="report-source" class="form-control"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        الوصف حسب التقييم
-                                    </div>
-                                    <div class="card-body">
-                                        <span id="case-description" class="col-sm-12 h-100"></span>
-                                    </div>
-                                </div>
-
-                               @*  <div class="mb-1">
-                                    <label for="formFile" class="form-label fw-bold">Quick Upload</label>
-                                    <input class="form-control" type="file" id="formFile" multiple>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label text-start"> NAME : </label>
-                                    <div class="col-sm-6 position-relative">
-                                        <select id="selected-file-name" class="form-control custom-select">
-                                            <option></option>
-                                            <option value="CitizenShip">Citizen Ship</option>
-                                            <option value="Marksheet">Marksheet</option>
-                                            <option value="Character Certificate">Character Certificate</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mb-3">
-                                    <label class="col-sm-2 col-form-label text-start"> DATE : </label>
-                                    <div class="col-sm-4">
-                                        <input type="date" id="selected-date" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div id="upload-status" class="mt-2 text-success fw-bold"></div> *@
-
-                            </div>
-                        </form>
                     </div>
                 </div>
 
-                <!-- Footer Buttons -->
-                <div class="d-flex flex-wrap gap-2 footer-buttons mt-3" dir="rtl">
-                    <button class="btn btn-secondary flex-fill" onclick="nextStudent()">Next</button>
-                    <button class="btn btn-secondary flex-fill" onclick="prevStudent()">Previous</button>
-                    <a asp-controller="Student" asp-action="Create" class="btn btn-primary flex-fill">New</a>
-                    <a id="edit-button" class="btn btn-secondary flex-fill">Edit</a>
-                    <button class="btn btn-danger flex-fill" onclick="confirmDelete()">حذف Delete</button>
+                <div class="filter-section">
+                    <div class="col-12" dir="rtl">
+                        <div class="form-group row mb-2">
+                            <div class="col-12">
+                                <label class="col-form-label text-start">رقم الهوية الشخصية:(ID)</label>
+                                <input type="text" id="filter-qatar-id" class="form-control" autofocus />
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <div class="col-sm-12">
+                                <label class="col-form-label text-start">اسم الطالب:(Name)</label>
+                                <input type="text" id="filter-fullname" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <div class="col-sm-12">
+                                <label class="col-form-label text-start"> رقم الهاتف المحمو: (Mobile)</label>
+                                <input type="text" id="filter-phone" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Student list -->
+                <div class="student-table">
+                    <table class="table table-bordered table-sm mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>الجنسية</th>
+                                <th>اسم الطالب</th>
+                                <th>سر</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-table-body">
+                            <!-- rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-2 text-danger">
+                    عدد الطلاب: <strong id="student-count">0</strong>
                 </div>
             </div>
         </div>
-    </div>
 
-    @section Scripts {
-        <script src="~/js/StudentSearchController.js"></script>
-    }
-</body>
-</html>
+        <!-- Main content -->
+        <div class="col-lg-9">
+            <div class="content">
+                <div class="content-heading">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 id="student-fullname"></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <form method="post" enctype="multipart/form-data">
+                        @* <input asp-for="ImageUrl" hidden /> *@
+
+                        <!-- Address Information -->
+                        <div class="row">
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">بيانات العنوان :</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">المدينة:</label>
+                                    <div class="col-sm-8">
+                                        <span id="student-city" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
+                                    <div class="col-sm-8">
+                                        <span id="student-zone" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
+                                    <div class="col-sm-8">
+                                        <span id="student-street" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
+                                    <div class="col-sm-8">
+                                        <span id="student-home" class="form-control"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*  contact Information *@
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">بيانات التواصل :</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
+                                    <div class="col-sm-8">
+                                        <span id="father-phone" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
+                                    <div class="col-sm-8">
+                                        <span id="mother-phone" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
+                                    <div class="col-sm-8">
+                                        <span id="uncle-phone" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
+                                    <div class="col-sm-8">
+                                        <span id="other-phone" class="form-control"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Information -->
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">البيانات الشخصية:</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
+                                    <div class="col-sm-8">
+                                        <span id="qatar-id" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
+                                    <div class="col-sm-8">
+                                        <span id="first-name" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
+                                    <div class="col-sm-8">
+                                        <span id="last-name" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
+                                    <div class="col-sm-8">
+                                        <span id="nationality" class="form-control"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-start"> الصف:</label>
+                                    <div class="col-sm-3">
+                                        <span id="grade" class="form-control"></span>
+                                    </div>
+
+                                    <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
+                                    <div class="col-sm-3">
+                                        <span id="division" class="form-control"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*   level *@
+
+                        <div class="" dir="rtl">
+                            <div class="content-body mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    حالة الملف
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
+                                                <div class="col-sm-6">
+                                                    <span id="support-level" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
+                                                <div class="col-sm-4">
+                                                    <span id="previous-support-level" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
+                                                <div class="col-sm-8">
+                                                    <span id="entry-status" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label text-danger"> المدرسة السابق:</label>
+                                        <div class="col-sm-6">
+                                            <span id="former-school" class="form-control"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-body mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    البيانات الصحية
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
+                                                <div class="col-sm-7">
+                                                    <span id="date-of-birth" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
+                                                <div class="col-sm-7">
+                                                    <span id="date-of-registration" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
+                                                <div class="col-sm-8">
+                                                    <span id="report-date" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start"> شدة :</label>
+                                                <div class="col-sm-8">
+                                                    <span id="severity" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
+                                                <div class="col-sm-7">
+                                                    <span id="health-number" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
+                                                <div class="col-sm-8">
+                                                    <span id="diagnosis" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
+                                                <div class="col-sm-8">
+                                                    <span id="type-of-disability" class="form-control text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">IQ :</label>
+                                                <div class="col-sm-8">
+                                                    <span id="iq" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">الحالة :</label>
+                                                <div class="col-sm-7">
+                                                    <span id="stat" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
+                                                <div class="col-sm-9">
+                                                    <span id="report-source" class="form-control"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    الوصف حسب التقييم
+                                </div>
+                                <div class="card-body">
+                                    <span id="case-description" class="col-sm-12 h-100"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="d-flex flex-wrap gap-2 footer-buttons mt-3" dir="rtl">
+                <button class="btn btn-secondary flex-fill" onclick="nextStudent()">Next</button>
+                <button class="btn btn-secondary flex-fill" onclick="prevStudent()">Previous</button>
+                <a asp-controller="Student" asp-action="Create" class="btn btn-primary flex-fill">New</a>
+                <a id="edit-button" class="btn btn-secondary flex-fill">Edit</a>
+                <button class="btn btn-danger flex-fill" onclick="confirmDelete()">حذف Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/StudentSearchController.js"></script>
+}

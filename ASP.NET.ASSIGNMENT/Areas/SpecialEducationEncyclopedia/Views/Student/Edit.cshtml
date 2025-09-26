@@ -1,438 +1,391 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيانات الطلاب</title>
-    <style>
-        .green-box {
-            background: #00b050;
-            color: #fff;
-            padding: 6px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
+﻿
+<div class="py-2">
 
-        .sidebar {
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 8px;
-        }
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-3">
+            <div class="sidebar">
+                <img src="~/images/profile.png"
+                     style="width:100%; border-radius:5px; border: 1px solid;"
+                     alt="No Image Available" />
 
-            .sidebar h6 {
-                font-size: 40px;
-                margin-bottom: 5px;
-            }
-
-        .filter-section {
-            border: 1px solid #ccc;
-            padding: 8px;
-            margin-bottom: 10px;
-            background: #fdfdfd;
-        }
-
-            .filter-section label {
-                margin-left: 10px;
-            }
-
-        .footer-buttons button {
-            min-width: 120px;
-        }
-
-     
-
-    </style>
-</head>
-<body>
-    <div class="py-2">
-
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-lg-3 mb-3">
-                <div class="sidebar">
-                    <img src="~/images/profile.png"
-                         style="width:100%; border-radius:5px; border: 1px solid;"
-                         alt="No Image Available" />
-
-                    <div class="filter-section mt-5">
-                        <div class="row">
-                            <div class="col-12 d-grid gap-2">
-                                <button class="btn btn-secondary w-100" onclick="saveStudent()">حفظ وإضافة Save</button>
-                                @* <button class="btn btn-success w-100">حفظ وانهاء</button> *@
-                                <button class="btn btn-danger w-100"> Cancelإلغاء</button>
-                            </div>
+                <div class="filter-section mt-5">
+                    <div class="row">
+                        <div class="col-12 d-grid gap-2">
+                            <button class="btn btn-secondary w-100" onclick="saveStudent()">حفظ وإضافة Save</button>
+                            @* <button class="btn btn-success w-100">حفظ وانهاء</button> *@
+                            <button class="btn btn-danger w-100"> Cancelإلغاء</button>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
-            <!-- Main content -->
-            <div class="col-lg-9">
-                <div class="content">
-                    <div class="content-heading">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4 id="student-fullname">Student | Edit</h4>
-                            </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-lg-9">
+            <div class="content">
+                <div class="content-heading">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 id="student-fullname">Student | Edit</h4>
                         </div>
                     </div>
+                </div>
 
-                    <div class="content-body">
-                        <form method="post" enctype="multipart/form-data">
-                            @* <input asp-for="ImageUrl" hidden /> *@
+                <div class="content-body">
+                    <form method="post" enctype="multipart/form-data">
+                        @* <input asp-for="ImageUrl" hidden /> *@
 
-                            <!-- Address Information -->
-                            <div class="row">
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">بيانات العنوان :</label>
-                                    </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">المدينة:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="student-city" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="student-zone" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="student-street" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="student-home" class="form-control" />
-                                        </div>
+                        <!-- Address Information -->
+                        <div class="row">
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">بيانات العنوان :</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">المدينة:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="student-city" class="form-control" />
                                     </div>
                                 </div>
 
-                                @*  contact Information *@
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">بيانات التواصل :</label>
-                                    </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="father-phone" class="form-control"
-                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="mother-phone" class="form-control"
-                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="uncle-phone" class="form-control"
-                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="other-phone" class="form-control"
-                                                   oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
-                                        </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">المنطقة:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="student-zone" class="form-control" />
                                     </div>
                                 </div>
 
-                                <!-- Personal Information -->
-                                <div class="col-4 border rounded p-3 mb-3" dir="rtl">
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-12 col-form-label text-end pe-5">البيانات الشخصية:</label>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">رقم الشارع:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="student-street" class="form-control" />
                                     </div>
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" id="qatar-id" class="form-control"
-                                                   oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" 
-                                                   autofocus />
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">رقم المنزل:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="student-home" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*  contact Information *@
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">بيانات التواصل :</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال الأب:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" id="father-phone" class="form-control"
+                                               oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال الأم:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" id="mother-phone" class="form-control"
+                                               oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> جوال العم:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" id="uncle-phone" class="form-control"
+                                               oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">جوال أخر:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" id="other-phone" class="form-control"
+                                               oninput="if(this.value.length > 8) this.value = this.value.slice(0,8);" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Information -->
+                            <div class="col-4 border rounded p-3 mb-3" dir="rtl">
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-12 col-form-label text-end pe-5">البيانات الشخصية:</label>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" id="qatar-id" class="form-control"
+                                               oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);"
+                                               disabled />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="first-name" class="form-control" autofocus/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="last-name" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="nationality" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-start">الصف:</label>
+                                    <div class="col-sm-3 position-relative">
+                                        <select id="grade" class="form-control custom-select">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
+                                    <div class="col-sm-3 position-relative">
+                                        <select id="division" class="form-control custom-select">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*   level *@
+
+                        <div class="" dir="rtl">
+                            <div class="content-body mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    حالة الملف
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
+                                                <div class="col-sm-6 position-relative">
+                                                    <select id="support-level" class="form-control custom-select">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
+                                                <div class="col-sm-4 position-relative">
+                                                    <select id="previous-support-level" class="form-control custom-select">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
+                                                <div class="col-sm-8 position-relative">
+                                                    <select id="entry-status" class="form-control custom-select">
+                                                        <option value="Supported">غير مقيد بالدعم</option>
+                                                        <option value="Not Supported">مقيد بالدعم</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="first-name" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> اسم الأب:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="last-name" class="form-control"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-2">
-                                        <label class="col-sm-4 col-form-label text-start"> الجنسية:</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" id="nationality" class="form-control" />
-                                        </div>
-                                    </div>
-
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label text-start">الصف:</label>
-                                        <div class="col-sm-3 position-relative">
-                                            <select id="grade" class="form-control custom-select">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
+                                        <label class="col-sm-2 col-form-label text-danger">المدرسة السابقة:</label>
+                                        <div class="col-sm-6 position-relative">
+                                            <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)">
+                                                <option value="">اختر المدرسة</option>
+                                                <option value="Other">New School</option>
                                             </select>
-                                        </div>
-
-                                        <label class="col-sm-2 col-form-label text-start"> الشعبة:</label>
-                                        <div class="col-sm-3 position-relative">
-                                            <select id="division" class="form-control custom-select">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="Other">Other</option>
-                                            </select>
+                                            <input type="text" id="new-school" class="form-control mt-2" style="display:none;" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            @*   level *@
-
-                            <div class="" dir="rtl">
-                                <div class="content-body mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        حالة الملف
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label"> مستوى الدعم:</label>
-                                                    <div class="col-sm-6 position-relative">
-                                                        <select id="support-level" class="form-control custom-select">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                         </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-8 col-form-label text-danger text-start">  مستوى الدعم السابق:</label>
-                                                    <div class="col-sm-4 position-relative">
-                                                        <select id="previous-support-level" class="form-control custom-select">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                        </select>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-danger text-start">حالة القيد:</label>
-                                                    <div class="col-sm-8 position-relative">
-                                                        <select id="entry-status" class="form-control custom-select">
-                                                            <option value="Supported">غير مقيد بالدعم</option>
-                                                            <option value="Not Supported">مقيد بالدعم</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label text-danger">المدرسة السابقة:</label>
-                                            <div class="col-sm-6 position-relative">
-                                                <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)">
-                                                    <option value="">اختر المدرسة</option>
-                                                    <option value="Other">New School</option>
-                                                </select>
-                                                <input type="text" id="new-school" class="form-control mt-2" style="display:none;" />
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="content-body mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    البيانات الصحية
                                 </div>
-                                <div class="content-body mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        البيانات الصحية
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
+                                                <div class="col-sm-7">
+                                                    <input type="date" id="date-of-birth" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
+                                                <div class="col-sm-7">
+                                                    <input type="date" id="date-of-registration" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
+                                                <div class="col-sm-8">
+                                                    <input type="date" id="report-date" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start"> شدة :</label>
+                                                <div class="col-sm-8 position-relative">
+                                                    <select id="severity" class="form-control custom-select">
+                                                        <option value="بسيط">بسيط</option>
+                                                        <option value="متوسطة">متوسطة</option>
+                                                        <option value="شديدة">شديدة</option>
+                                                        <option value="عميقة">عميقة</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">تاريخ الميلاد :</label>
-                                                    <div class="col-sm-7">
-                                                        <input type="date" id="date-of-birth" class="form-control" />
-                                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" id="health-number" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label text-start"> تاريخ دخول الدعم :</label>
-                                                    <div class="col-sm-7">
-                                                        <input type="date" id="date-of-registration" class="form-control"/>
-                                                    </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="diagnosis" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">تاريخ التقييم :</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="date" id="report-date" class="form-control"/>
-                                                    </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
+                                                <div class="col-sm-8 position-relative">
+                                                    <select id="type-of-disability" class="form-control text-danger custom-select">
+                                                        <option value="صعوبات تعلم">صعوبات تعلم</option>
+                                                        <option value="مشكلات التعلم">مشكلات التعلم</option>
+                                                        <option value="الإعاقة الجسدية">الإعاقة الجسدية</option>
+                                                        <option value="الإعاقة البصرية">الإعاقة البصرية</option>
+                                                        <option value="الإعاقة السمعية">الإعاقة السمعية</option>
+                                                        <option value="اضطراب طيف توحد">اضطراب طيف توحد</option>
+                                                        <option value="الإعاقات المزدوجة">الإعاقات المزدوجة</option>
+                                                        <option value="الإعاقات المتعددة">الإعاقات المتعددة</option>
+                                                        <option value="اضطرابات النطق واللغة">اضطرابات النطق واللغة</option>
+                                                        <option value="الإعاقة الذهنية ومتلازماتها">الإعاقة الذهنية ومتلازماتها</option>
+                                                        <option value="الفئة البينية - بطء التعلم">الفئة البينية - بطء التعلم</option>
+                                                        <option value="اضطرابات نقص الانتباه وفرط الحركة">اضطرابات نقص الانتباه وفرط الحركة</option>
+                                                        <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
+                                                        <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
+                                                        <option value="الصحة المدرسية">الصحة المدرسية</option>
+                                                        <option value="مستشفى سدرة">مستشفى سدرة</option>
+                                                        <option value="مستشفى الرميلة">مستشفى الرميلة</option>
+                                                        <option value="مستشفى حمد العام">مستشفى حمد العام</option>
+                                                        <option value="عيادات خارج الدولة">عيادات خارج الدولة</option>
+                                                        <option value="عيادات خاصة داخل الدولة">عيادات خاصة داخل الدولة</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start"> شدة :</label>
-                                                    <div class="col-sm-8 position-relative">
-                                                        <select id="severity" class="form-control custom-select">
-                                                            <option value="بسيط">بسيط</option>
-                                                            <option value="متوسطة">متوسطة</option>
-                                                            <option value="شديدة">شديدة</option>
-                                                            <option value="عميقة">عميقة</option>
-                                                        </select>
-                                                    </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-start">IQ :</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="iq" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-5 col-form-label">الحالة :</label>
+                                                <div class="col-sm-7 position-relative">
+                                                    <select id="stat" class="form-control custom-select">
+                                                        <option value="واضح"> واضح </option>
+                                                        <option value="غير واضح"> غير واضح</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="report-source" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">الرقم الصحي :</label>
-                                                    <div class="col-sm-7">
-                                                        <input type="text" id="health-number" class="form-control"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start"> التشخيص :</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="diagnosis" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">نوع الإعاقة  :</label>
-                                                    <div class="col-sm-8 position-relative">
-                                                        <select id="type-of-disability" class="form-control text-danger custom-select">
-                                                            <option value="صعوبات تعلم">صعوبات تعلم</option>
-                                                            <option value="مشكلات التعلم">مشكلات التعلم</option>
-                                                            <option value="الإعاقة الجسدية">الإعاقة الجسدية</option>
-                                                            <option value="الإعاقة البصرية">الإعاقة البصرية</option>
-                                                            <option value="الإعاقة السمعية">الإعاقة السمعية</option>
-                                                            <option value="اضطراب طيف توحد">اضطراب طيف توحد</option>
-                                                            <option value="الإعاقات المزدوجة">الإعاقات المزدوجة</option>
-                                                            <option value="الإعاقات المتعددة">الإعاقات المتعددة</option>
-                                                            <option value="اضطرابات النطق واللغة">اضطرابات النطق واللغة</option>
-                                                            <option value="الإعاقة الذهنية ومتلازماتها">الإعاقة الذهنية ومتلازماتها</option>
-                                                            <option value="الفئة البينية - بطء التعلم">الفئة البينية - بطء التعلم</option>
-                                                            <option value="اضطرابات نقص الانتباه وفرط الحركة">اضطرابات نقص الانتباه وفرط الحركة</option>
-                                                            <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
-                                                            <option value="المشكلات الصحية تؤثر على الجانب الاكاديمي">المشكلات الصحية تؤثر على الجانب الاكاديمي</option>
-                                                            <option value="الصحة المدرسية">الصحة المدرسية</option>
-                                                            <option value="مستشفى سدرة">مستشفى سدرة</option>
-                                                            <option value="مستشفى الرميلة">مستشفى الرميلة</option>
-                                                            <option value="مستشفى حمد العام">مستشفى حمد العام</option>
-                                                            <option value="عيادات خارج الدولة">عيادات خارج الدولة</option>
-                                                            <option value="عيادات خاصة داخل الدولة">عيادات خاصة داخل الدولة</option>
-                                                            <option value="Other">Other</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label text-start">IQ :</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="iq" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-5 col-form-label">الحالة :</label>
-                                                    <div class="col-sm-7 position-relative">
-                                                        <select id="stat" class="form-control custom-select">
-                                                            <option value="واضح"> واضح </option>
-                                                            <option value="غير واضح"> غير واضح</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label text-start"> مصدر التقييم  :</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" id="report-source" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3 border shadow-sm">
-                                    <div class="card-header bg-light fw-bold">
-                                        الوصف حسب التقييم
-                                    </div>
-                                    <div class="card-body">
-                                        <textarea id="case-description" class="col-sm-12 h-100"></textarea>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="card mb-3 border shadow-sm">
+                                <div class="card-header bg-light fw-bold">
+                                    الوصف حسب التقييم
+                                </div>
+                                <div class="card-body">
+                                    <textarea id="case-description" class="col-sm-12 h-100"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    @section Scripts {
-        <script src="~/js/StudentEditController.js"></script>
-    }
-</body>
-</html>
+@section Scripts {
+    <script src="~/js/StudentEditController.js"></script>
+}
+

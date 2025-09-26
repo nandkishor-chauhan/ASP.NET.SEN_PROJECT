@@ -95,6 +95,10 @@ $(document).ready(function () {
 
 });
 
+let filteredStudents = [];  // store filtered results
+let currentIndex = 0;       // track selected row globally
+let selectedStudentId = null;
+
 function applyFilters() {
     let selectedLevel = $("input[name='supportLevel']:checked").val() || "All";
     let selectedStatus = $("input[name='entry-status']:checked").val();
@@ -104,30 +108,24 @@ function applyFilters() {
         selectedGrades.push($(this).val());
     });
 
-    // If "All" is checked, ignore grade filter
     if ($("#gradeAll").is(":checked")) {
         selectedGrades = "All";
     }
 
     // Filter students
-    let filtered = allStudents.filter(student => {
+    filteredStudents = allStudents.filter(student => {
         let matchLevel = (selectedLevel === "All" || student.levelSuport == selectedLevel);
         let matchStatus = (!selectedStatus || student.entryStatus === selectedStatus);
-        let matchGrade =
-            (selectedGrades === "All" || selectedGrades.length === 0 || selectedGrades.includes(student.grade));
+        let matchGrade = (selectedGrades === "All" || selectedGrades.length === 0 || selectedGrades.includes(student.grade));
 
         return matchLevel && matchStatus && matchGrade;
     });
 
-    renderTable(filtered);
+    renderTable(filteredStudents);
 
     // Update student count
-    $("#student-count").text(filtered.length);
+    $("#student-count").text(filteredStudents.length);
 }
-
-
-let currentIndex = 0; // track selected row globally
-let selectedStudentId = null;
 
 function renderTable(students) {
     let tbody = $("#student-table-body");
@@ -141,7 +139,6 @@ function renderTable(students) {
         return;
     }
 
-    // Populate table rows
     students.forEach(function (student, index) {
         let row = `
             <tr data-index="${index}" data-qatarid="${student.qatarID}" class="clickable-row">
@@ -153,18 +150,16 @@ function renderTable(students) {
         tbody.append(row);
     });
 
-    $(".clickable-row").css("cursor", "pointer");
-        
-    // Row click event
-    $(".clickable-row").on("click", function () {
+    $(".clickable-row").css("cursor", "pointer").on("click", function () {
         currentIndex = $(this).data("index");
         selectRow(students, currentIndex);
     });
 
-    // 🔹 Auto-select the first row
+    // Auto-select first row
     currentIndex = 0;
     selectRow(students, currentIndex);
 }
+
 
 // Helper to select a row
 function selectRow(students, index) {
@@ -182,19 +177,6 @@ function selectRow(students, index) {
         $("#edit-button").attr("href", `/SpecialEducationEncyclopedia/Student/Edit?qatarID=${selectedStudentId}`);
     }
 }
-
-// select row helper
-//function selectRow(students, index) {
-//    $(".clickable-row").removeClass("table-active");
-
-//    let row = $(`tr[data-index="${index}"]`);
-//    row.addClass("table-active");
-
-//    let student = students[index];
-//    if (student) {
-//        fillPersonalInfo(student);
-//    }
-//}
 
 // fill details
 function fillPersonalInfo(student) {
@@ -287,18 +269,23 @@ function clearPersonalInfo() {
 
 // Next / Previous buttons
 function nextStudent() {
-    if (currentIndex < allStudents.length - 1) {
+    if (filteredStudents.length === 0) return;
+
+    if (currentIndex < filteredStudents.length - 1) {
         currentIndex++;
-        selectRow(allStudents, currentIndex);
+        selectRow(filteredStudents, currentIndex);
     }
 }
 
 function prevStudent() {
+    if (filteredStudents.length === 0) return;
+
     if (currentIndex > 0) {
         currentIndex--;
-        selectRow(allStudents, currentIndex);
+        selectRow(filteredStudents, currentIndex);
     }
 }
+
 
 
 

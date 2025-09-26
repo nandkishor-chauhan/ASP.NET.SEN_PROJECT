@@ -285,12 +285,3 @@ div.input-group.input-daterange span.input-group-addon {
 .employee-modal-footer {
     background-color: #f9f9f9;
 }
-
-
-/* Highlight active nav link */
-.navbar-nav .nav-item.active > .nav-link {
-    color: #0d6efd; /* Bootstrap primary color */
-    font-weight: bold; /* Make text bold */
-    background-color: #e9ecef; /* Optional light background */
-    border-radius: 5px; /* Rounded corners */
-}

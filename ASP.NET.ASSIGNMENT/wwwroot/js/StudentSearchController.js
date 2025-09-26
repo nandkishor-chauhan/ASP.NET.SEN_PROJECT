@@ -107,6 +107,19 @@ function renderTable(students) {
     }
 }
 
+$(document).ready(function () {
+    // Call renderTable when a radio button changes
+    $("input[name='entry-status']").on("change", function () {
+        renderTable(allStudents);
+    });
+
+    // Also call renderTable when typing in filters
+    $("#filter-qatar-id, #filter-fullname, #filter-phone").on("input", function () {
+        renderTable(allStudents);
+    });
+});
+
+
 
 function selectRow(students, index) {
     $(".clickable-row").removeClass("table-active");
@@ -125,7 +138,7 @@ function selectRow(students, index) {
 }
 
 
-    function displayStudent(student) {
+function displayStudent(student) {
     $("#student-fullname").text(student.fullName);
 
     // Address Information
@@ -141,7 +154,7 @@ function selectRow(students, index) {
     $("#other-phone").text(student.otherPhone || "");
 
     // Personal Information
-    $("#qatar-id").val(student.qatarID || "");
+    $("#qatar-id").text(student.qatarID || "");
     $("#first-name").text(student.firstName || "");
     $("#last-name").text(student.lastName || "");
     $("#nationality").text(student.nationalty || "");
@@ -165,7 +178,7 @@ function selectRow(students, index) {
     $("#stat").text(student.stat || "");
     $("#report-source").text(student.reportSource || "");
 
-    $("#case-description").text(student.caseDescription || ""); 
+    $("#case-description").text(student.caseDescription || "");
 }
 
 function resetStudentDisplay() {

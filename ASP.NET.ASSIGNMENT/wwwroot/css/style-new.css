@@ -387,3 +387,49 @@ h6 {
     transform: translateY(-50%);
     pointer-events: none; /* click passes through */
 }
+
+.green-box {
+    background: #00b050;
+    color: #fff;
+    padding: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.sidebar {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 8px;
+}
+
+    .sidebar h6 {
+        font-size: 40px;
+        margin-bottom: 5px;
+    }
+
+.filter-section {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-bottom: 10px;
+    background: #fdfdfd;
+}
+
+    .filter-section label {
+        margin-left: 10px;
+    }
+
+.student-table {
+    max-height: 350px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+    .student-table table {
+        font-size: 14px;
+    }
+
+.footer-buttons button {
+    min-width: 120px;
+}
