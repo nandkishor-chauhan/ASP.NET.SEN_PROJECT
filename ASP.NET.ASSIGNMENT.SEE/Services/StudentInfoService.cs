@@ -31,8 +31,8 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.LastName,
                     x.FullName,
                     Nationalty = x.Nationalty ??"",
-                    Grade = x.Grade ?? "",
-                    Division = x.Division ?? "",
+                    x.Grade,
+                    x.Division,
                     FatherPhone = x.FatherPhone ?? "",
                     MatherPhone = x.MatherPhone ?? "",
                     UncalPhone = x.UncalPhone ?? "",
@@ -118,7 +118,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
         {
             return await _unitOfWork.StudentInfoRepository
                 .Get()
-                .Select(x => new { Grade = x.Grade ?? "" })
+                .Select(x => new { x.Grade })
                 .Distinct()
                 .ToListAsync();
         }

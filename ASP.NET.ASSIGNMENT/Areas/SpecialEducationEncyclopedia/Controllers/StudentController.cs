@@ -213,66 +213,66 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         }
 
         // [HttpGet("GetById/{qatarID}")]
-        [HttpGet]
-        public async Task<ActionResult> GetById(int qatarID)
-        {
-            try
-            {
-                var existingStudent = await _studentInfoService.GetById(qatarID);
+        //[HttpGet]
+        //public async Task<ActionResult> GetById(int qatarID)
+        //{
+        //    try
+        //    {
+        //        var existingStudent = await _studentInfoService.GetById(qatarID);
 
-                if (existingStudent == null)
-                {
-                    return Json(new { success = false, error = "Student not found" });
-                }
+        //        if (existingStudent == null)
+        //        {
+        //            return Json(new { success = false, error = "Student not found" });
+        //        }
 
-                var student = new
-                {
-                    existingStudent.QatarID,
-                    existingStudent.FirstName,
-                    existingStudent.LastName,
-                    existingStudent.FullName,
-                    Nationalty = existingStudent.Nationalty ?? "",
-                    existingStudent.Grade,
-                    Division = existingStudent.Division ?? "",
-                    FatherPhone = existingStudent.FatherPhone ?? "",
-                    MatherPhone = existingStudent.MatherPhone ?? "",
-                    UncalPhone = existingStudent.UncalPhone ?? "",
-                    OtherPhone = existingStudent.OtherPhone ?? "",
-                    HomeNumber = existingStudent.HomeNumber ?? "",
-                    StreetNumber = existingStudent.StreetNumber ?? "",
-                    ZoneNumber = existingStudent.ZoneNumber ?? "",
-                    City = existingStudent.City ?? "",
-                    HealthNumber = existingStudent.HealthNumber ?? "",
-                    TypeOfDisability = existingStudent.TypeOfDisability ?? "",
-                    Severity = existingStudent.Severity ?? "",
-                    existingStudent.LevelSuport,
-                    Stat = existingStudent.Stat ?? "",
-                    Diagnosis = existingStudent.Diagnosis ?? "",
-                    CaseDescription = existingStudent.CaseDescription ?? "",
-                    existingStudent.IQ,
-                    ReasonRorClosing = existingStudent.ReasonRorClosing ?? "",
-                    existingStudent.EntryStatus,
-                    formerSchool = existingStudent.formerSchool ?? "",
-                    formerLevel = existingStudent.formerLevel ?? "",
-                    ReportSource = existingStudent.ReportSource ?? "",
-                    Instr_W_St = existingStudent.Instr_W_St ?? "",
+        //        var student = new
+        //        {
+        //            existingStudent.QatarID,
+        //            existingStudent.FirstName,
+        //            existingStudent.LastName,
+        //            existingStudent.FullName,
+        //            Nationalty = existingStudent.Nationalty ?? "",
+        //            existingStudent.Grade,
+        //            existingStudent.Division,
+        //            FatherPhone = existingStudent.FatherPhone ?? "",
+        //            MatherPhone = existingStudent.MatherPhone ?? "",
+        //            UncalPhone = existingStudent.UncalPhone ?? "",
+        //            OtherPhone = existingStudent.OtherPhone ?? "",
+        //            HomeNumber = existingStudent.HomeNumber ?? "",
+        //            StreetNumber = existingStudent.StreetNumber ?? "",
+        //            ZoneNumber = existingStudent.ZoneNumber ?? "",
+        //            City = existingStudent.City ?? "",
+        //            HealthNumber = existingStudent.HealthNumber ?? "",
+        //            TypeOfDisability = existingStudent.TypeOfDisability ?? "",
+        //            Severity = existingStudent.Severity ?? "",
+        //            existingStudent.LevelSuport,
+        //            Stat = existingStudent.Stat ?? "",
+        //            Diagnosis = existingStudent.Diagnosis ?? "",
+        //            CaseDescription = existingStudent.CaseDescription ?? "",
+        //            existingStudent.IQ,
+        //            ReasonRorClosing = existingStudent.ReasonRorClosing ?? "",
+        //            existingStudent.EntryStatus,
+        //            formerSchool = existingStudent.formerSchool ?? "",
+        //            formerLevel = existingStudent.formerLevel ?? "",
+        //            ReportSource = existingStudent.ReportSource ?? "",
+        //            Instr_W_St = existingStudent.Instr_W_St ?? "",
 
-                    DateOfBirth = existingStudent.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
-                    DateOfRegistration = existingStudent.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
-                    DateOfClose = existingStudent.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
-                    ReportDate = existingStudent.ReportDate?.ToString("yyyy-MM-dd") ?? "",
+        //            DateOfBirth = existingStudent.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
+        //            DateOfRegistration = existingStudent.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
+        //            DateOfClose = existingStudent.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
+        //            ReportDate = existingStudent.ReportDate?.ToString("yyyy-MM-dd") ?? "",
 
 
 
-                };
+        //        };
 
-                return Json(new { success = true, data = student });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, error = ex.Message });
-            }
-        }
+        //        return Json(new { success = true, data = student });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { success = false, error = ex.Message });
+        //    }
+        //}
 
 
         #endregion

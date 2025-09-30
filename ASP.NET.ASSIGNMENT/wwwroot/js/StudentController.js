@@ -141,7 +141,7 @@ function renderTable(students) {
 
     students.forEach(function (student, index) {
         let row = `
-            <tr data-index="${index}" data-qatarid="${student.qatarID}" class="clickable-row">
+            <tr data-index="${index}" data-qatarid="${student.Id}" class="clickable-row">
                 <td>${student.nationalty}</td>
                 <td>${student.fullName}</td>
                 <td>${index + 1}</td>
@@ -225,7 +225,7 @@ function fillPersonalInfo(student) {
 
 function clearPersonalInfo() {
 
-    $("#student-fullname").text(student.fullName);
+    $("#student-fullname").text("");
 
     // Address Information
     $("#student-city").text("");
