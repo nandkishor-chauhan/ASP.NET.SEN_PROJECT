@@ -14,7 +14,7 @@
                         <div class="col-12 d-grid gap-2">
                             <button class="btn btn-secondary w-100" onclick="saveStudent()">حفظ وإضافة Save</button>
                             @* <button class="btn btn-success w-100">حفظ وانهاء</button> *@
-                            <button class="btn btn-danger w-100"> Cancelإلغاء</button>
+                            <a asp-controller="Student" asp-action="Index" class="btn btn-success flex-fill"> List إلغاء</a>
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,7 @@
                 <div class="content-body">
                     <form method="post" enctype="multipart/form-data">
                         @* <input asp-for="ImageUrl" hidden /> *@
+                        <input type="number" id="id" class="form-control" hidden/>
 
                         <!-- Address Information -->
                         <div class="row">
@@ -119,8 +120,8 @@
                                     <label class="col-sm-4 col-form-label text-start">الرقم الشخصي:</label>
                                     <div class="col-sm-8">
                                         <input type="number" id="qatar-id" class="form-control"
-                                               oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);"
-                                               disabled />
+                                               oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" 
+                                               autofocus />
                                     </div>
                                 </div>
 
@@ -128,7 +129,7 @@
                                 <div class="form-group row mb-2">
                                     <label class="col-sm-4 col-form-label text-start">الأسم الأول:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="first-name" class="form-control" autofocus/>
+                                        <input type="text" id="first-name" class="form-control" />
                                     </div>
                                 </div>
 
@@ -233,11 +234,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label text-danger">المدرسة السابقة:</label>
                                         <div class="col-sm-6 position-relative">
-                                            <select id="former-school" class="form-control custom-select" onchange="toggleOtherSchool(this)">
-                                                <option value="">اختر المدرسة</option>
+                                            <select id="former-school" class="form-control custom-select">
                                                 <option value="Other">New School</option>
                                             </select>
-                                            <input type="text" id="new-school" class="form-control mt-2" style="display:none;" />
+                                            @* <input type="text" id="new-school" class="form-control mt-2" style="display:none;" /> *@
                                         </div>
                                     </div>
                                 </div>

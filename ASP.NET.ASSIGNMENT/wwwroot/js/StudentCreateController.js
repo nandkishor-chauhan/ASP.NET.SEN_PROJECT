@@ -196,7 +196,6 @@ function saveStudent() {
         return; // Stop if validation fails
     }
 
-    // Collect form data
     let student = {
         city: $("#student-city").val(),
         zoneNumber: $("#student-zone").val(),
@@ -206,14 +205,14 @@ function saveStudent() {
         matherPhone: $("#mother-phone").val(),
         uncalPhone: $("#uncle-phone").val(),
         otherPhone: $("#other-phone").val(),
-        qatarID: parseInt($("#qatar-id").val(), 10),
-        firstName: $("#first-name").val().trim(),
-        lastName: $("#last-name").val().trim(),
+        qatarID: $("#qatar-id").val(),
+        firstName: $("#first-name").val(),
+        lastName: $("#last-name").val(),
         nationalty: $("#nationality").val(),
         grade: $("#grade").val(),
         division: $("#division").val(),
         levelSuport: $("#support-level").val(),
-        formerLevel: $("#previous-support-level").val(),
+        previousLevelSuport: $("#previous-support-level").val(),
         entryStatus: $("#entry-status").val(),
         formerSchool: $("#former-school").val(),
         dateOfBirth: $("#date-of-birth").val(),
@@ -233,8 +232,7 @@ function saveStudent() {
     $.ajax({
         url: "/SpecialEducationEncyclopedia/Student/Create",
         type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(student),
+        data: student,
         success: function (res) {
             alert(res.message || "Student saved successfully!");
         },

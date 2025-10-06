@@ -141,7 +141,7 @@ function renderTable(students) {
 
     students.forEach(function (student, index) {
         let row = `
-            <tr data-index="${index}" data-qatarid="${student.Id}" class="clickable-row">
+            <tr data-index="${index}" data-qatarid="${student.qatarID}" class="clickable-row">
                 <td>${student.nationalty}</td>
                 <td>${student.fullName}</td>
                 <td>${index + 1}</td>
@@ -170,11 +170,11 @@ function selectRow(students, index) {
 
     let student = students[index];
     if (student) {
-        selectedStudentId = student.qatarID; // store selected student ID
+        selectedStudentId = student.id; // store selected student ID
         fillPersonalInfo(student);
 
         // Update Edit button href
-        $("#edit-button").attr("href", `/SpecialEducationEncyclopedia/Student/Edit?qatarID=${selectedStudentId}`);
+        $("#edit-button").attr("href", `/SpecialEducationEncyclopedia/Student/Edit?id=${selectedStudentId}`);
     }
 }
 
@@ -412,7 +412,7 @@ function saveStudent() {
 
 
 function uploadFiles() {
-    let studentId = parseInt($("#qatar-id").val(), 10); // convert to int
+    let studentId = $("#qatar-id").val();
     let files = $("#formFile")[0].files;
 
     // Get selected file type (name) and date

@@ -7,7 +7,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Models
 
         [Key]
         public int Id { get; set; }
-        public int QatarID { get; set; }
+        public long QatarID { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
@@ -48,5 +48,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Models
         public string? ReportSource { get; set; }
         public DateTime? ReportDate { get; set; }
         public string? Instr_W_St { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
     }
 }

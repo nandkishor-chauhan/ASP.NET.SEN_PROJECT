@@ -27,7 +27,7 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         {
             return View();
         }
-        public IActionResult Edit(int qatarID)
+        public IActionResult Edit(int id)
         {
             return View();
         }
@@ -40,9 +40,15 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         [HttpPost]
         public async Task<JsonResult> Create(StudentInformation viewModel, IFormFile? file)
         {
+
+            if (await _unitOfWork.StudentInfoRepository.AnyAsync(x => x.QatarID == viewModel.QatarID))
+            {
+                throw new Exception("Student Id already exist");
+            }
+
             var student = new StudentInformation
             {
-                // QatarID = viewModel.QatarID,
+                QatarID = viewModel.QatarID,
                 FirstName = viewModel.FirstName,
                 LastName = viewModel.LastName,
                 FullName = viewModel.FirstName + " " + viewModel.LastName,
@@ -86,13 +92,24 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
         [HttpPost]
         public async Task<JsonResult> Edit(StudentInformation viewModel)
         {
-            if (viewModel.QatarID == 0)
+            if (viewModel.Id == 0)
             {
-                return Json(new { success = false, error = "QatarID is required for editing." });
+                return Json(new { success = false, message = "Student Id is missing." });
             }
 
-            var existingStudent = await _studentInfoService.GetById(viewModel.QatarID)
-                ?? throw new Exception("Department Id does not exist");
+            var existingStudent = await _studentInfoService.GetById(viewModel.Id)
+                ?? throw new Exception("Student Id does not exist");
+
+            if (viewModel.QatarID != existingStudent.QatarID)
+            {
+                if (await _unitOfWork.StudentInfoRepository.AnyAsync(x => x.QatarID == viewModel.QatarID))
+                {
+                    throw new Exception("Student Id already exist");
+                }
+
+                existingStudent.QatarID = viewModel.QatarID;
+            }
+
 
             if (existingStudent != null)
             {
@@ -134,9 +151,6 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
 
             return Json(new { success = true, message = "Student updated successfully." });
         }
-
-
-
 
 
         [HttpPost]
@@ -212,67 +226,68 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
             }
         }
 
-        // [HttpGet("GetById/{qatarID}")]
-        //[HttpGet]
-        //public async Task<ActionResult> GetById(int qatarID)
-        //{
-        //    try
-        //    {
-        //        var existingStudent = await _studentInfoService.GetById(qatarID);
+        //[HttpGet("GetById/{qatarID}")]
+        [HttpGet]
+        public async Task<ActionResult> GetById(int id)
+        {
+            try
+            {
+                var existingStudent = await _studentInfoService.GetById(id);
 
-        //        if (existingStudent == null)
-        //        {
-        //            return Json(new { success = false, error = "Student not found" });
-        //        }
+                if (existingStudent == null)
+                {
+                    return Json(new { success = false, error = "Student not found" });
+                }
 
-        //        var student = new
-        //        {
-        //            existingStudent.QatarID,
-        //            existingStudent.FirstName,
-        //            existingStudent.LastName,
-        //            existingStudent.FullName,
-        //            Nationalty = existingStudent.Nationalty ?? "",
-        //            existingStudent.Grade,
-        //            existingStudent.Division,
-        //            FatherPhone = existingStudent.FatherPhone ?? "",
-        //            MatherPhone = existingStudent.MatherPhone ?? "",
-        //            UncalPhone = existingStudent.UncalPhone ?? "",
-        //            OtherPhone = existingStudent.OtherPhone ?? "",
-        //            HomeNumber = existingStudent.HomeNumber ?? "",
-        //            StreetNumber = existingStudent.StreetNumber ?? "",
-        //            ZoneNumber = existingStudent.ZoneNumber ?? "",
-        //            City = existingStudent.City ?? "",
-        //            HealthNumber = existingStudent.HealthNumber ?? "",
-        //            TypeOfDisability = existingStudent.TypeOfDisability ?? "",
-        //            Severity = existingStudent.Severity ?? "",
-        //            existingStudent.LevelSuport,
-        //            Stat = existingStudent.Stat ?? "",
-        //            Diagnosis = existingStudent.Diagnosis ?? "",
-        //            CaseDescription = existingStudent.CaseDescription ?? "",
-        //            existingStudent.IQ,
-        //            ReasonRorClosing = existingStudent.ReasonRorClosing ?? "",
-        //            existingStudent.EntryStatus,
-        //            formerSchool = existingStudent.formerSchool ?? "",
-        //            formerLevel = existingStudent.formerLevel ?? "",
-        //            ReportSource = existingStudent.ReportSource ?? "",
-        //            Instr_W_St = existingStudent.Instr_W_St ?? "",
+                var student = new
+                {
+                    existingStudent.Id,
+                    existingStudent.QatarID,
+                    existingStudent.FirstName,
+                    existingStudent.LastName,
+                    existingStudent.FullName,
+                    Nationalty = existingStudent.Nationalty ?? "",
+                    existingStudent.Grade,
+                    existingStudent.Division,
+                    FatherPhone = existingStudent.FatherPhone ?? "",
+                    MatherPhone = existingStudent.MatherPhone ?? "",
+                    UncalPhone = existingStudent.UncalPhone ?? "",
+                    OtherPhone = existingStudent.OtherPhone ?? "",
+                    HomeNumber = existingStudent.HomeNumber ?? "",
+                    StreetNumber = existingStudent.StreetNumber ?? "",
+                    ZoneNumber = existingStudent.ZoneNumber ?? "",
+                    City = existingStudent.City ?? "",
+                    HealthNumber = existingStudent.HealthNumber ?? "",
+                    TypeOfDisability = existingStudent.TypeOfDisability ?? "",
+                    Severity = existingStudent.Severity ?? "",
+                    existingStudent.LevelSuport,
+                    Stat = existingStudent.Stat ?? "",
+                    Diagnosis = existingStudent.Diagnosis ?? "",
+                    CaseDescription = existingStudent.CaseDescription ?? "",
+                    existingStudent.IQ,
+                    ReasonRorClosing = existingStudent.ReasonRorClosing ?? "",
+                    existingStudent.EntryStatus,
+                    formerSchool = existingStudent.formerSchool ?? "",
+                    formerLevel = existingStudent.formerLevel ?? "",
+                    ReportSource = existingStudent.ReportSource ?? "",
+                    Instr_W_St = existingStudent.Instr_W_St ?? "",
 
-        //            DateOfBirth = existingStudent.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
-        //            DateOfRegistration = existingStudent.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
-        //            DateOfClose = existingStudent.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
-        //            ReportDate = existingStudent.ReportDate?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfBirth = existingStudent.DateOfBirth?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfRegistration = existingStudent.DateOfRegistration?.ToString("yyyy-MM-dd") ?? "",
+                    DateOfClose = existingStudent.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
+                    ReportDate = existingStudent.ReportDate?.ToString("yyyy-MM-dd") ?? "",
 
 
 
-        //        };
+                };
 
-        //        return Json(new { success = true, data = student });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, error = ex.Message });
-        //    }
-        //}
+                return Json(new { success = true, data = student });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
 
 
         #endregion

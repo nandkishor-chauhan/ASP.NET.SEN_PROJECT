@@ -26,6 +26,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                 .Get()
                 .Select(x => new
                 {
+                    x.Id,
                     x.QatarID,
                     x.FirstName,
                     x.LastName,
@@ -61,12 +62,13 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     x.DateOfRegistration,
                     x.DateOfClose,
                     x.ReportDate,
-
-
+                    x.CreatedOn,
                 })
+                .OrderByDescending(x=>x.CreatedOn)
                 .ToListAsync())
                 .Select(x => new
                 {
+                    x.Id,
                     x.QatarID,
                     x.FirstName,
                     x.LastName,
@@ -100,6 +102,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     DateOfClose = x.DateOfClose?.ToString("yyyy-MM-dd") ?? "",
                     ReportDate = x.ReportDate?.ToString("yyyy-MM-dd") ?? "",
 
+                    x.CreatedOn,
                     //x.Instr_W_St
                 })
                 .ToList();
@@ -124,9 +127,9 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
         }
 
 
-        public async Task<StudentInformation> GetById(int qatarID)
+        public async Task<StudentInformation> GetById(int id)
         {
-            return await _unitOfWork.StudentInfoRepository.GetByIdAsync(qatarID);
+            return await _unitOfWork.StudentInfoRepository.GetByIdAsync(id);
         }
 
 
@@ -135,6 +138,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
         {
             //var currentUser = await _userManager.GetUserAsync(User);
             //entity.UserId = _unitOfWork.GetCurrentUserName() ?? throw new InvalidOperationException("No logged-in user."); ;
+            entity.CreatedOn = DateTime.Now;
             _unitOfWork.StudentInfoRepository.Insert(entity);
             await _unitOfWork.SaveAsync();
 
@@ -143,6 +147,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
 
         public async Task<StudentInformation> Edit(StudentInformation entity)
         {
+            entity.CreatedOn = DateTime.Now;
             await _unitOfWork.SaveAsync();
             return entity;
         }

@@ -26,22 +26,22 @@
 $(document).ready(function () {
     // Get QatarID from query string
     const urlParams = new URLSearchParams(window.location.search);
-    const qatarID = urlParams.get("qatarID");
+    const id = urlParams.get("id");
 
-    if (qatarID) {
-        getStudentById(qatarID); // call your existing AJAX function
+    if (id) {
+        getStudentById(id); // call your existing AJAX function
     }
 });
 
-function getStudentById(qatarID) {
+function getStudentById(id) {
     $.ajax({
-        url: '/SpecialEducationEncyclopedia/Student/GetById?qatarID=' + qatarID,
+        url: '/SpecialEducationEncyclopedia/Student/GetById?id=' + id,
         type: 'GET',
         success: function (response) {
             if (response.success) {
                 let student = response.data;
 
-           
+                $("#id").val(student.id);
                 $("#student-fullname").val(student.fullName);
 
                 // Address Information
@@ -65,7 +65,7 @@ function getStudentById(qatarID) {
                 $("#division").val(student.division || "");
 
                 $("#support-level").val(student.levelSuport || "");
-                $("#previous-support-level").val(student.formerLevel || "");
+                $("#previous-support-level").val(student.PreviousLevelSuport || "");
                 $("#entry-status").val(student.entryStatus || "");
                 $("#former-school").val(student.formerSchool || "");
 
@@ -98,6 +98,7 @@ function getStudentById(qatarID) {
 function saveStudent() {
     let student = {
         //fullName: $("#student-fullname").val(),
+        id: $("#id").val(),
         city: $("#student-city").val(),
         zoneNumber: $("#student-zone").val(),
         streetNumber: $("#student-street").val(),
@@ -113,7 +114,7 @@ function saveStudent() {
         grade: $("#grade").val(),
         division: $("#division").val(),
         levelSuport: $("#support-level").val(),
-        formerLevel: $("#previous-support-level").val(),
+        previousLevelSuport: $("#previous-support-level").val(),
         entryStatus: $("#entry-status").val(),
         formerSchool: $("#former-school").val(),
         dateOfBirth: $("#date-of-birth").val(),
