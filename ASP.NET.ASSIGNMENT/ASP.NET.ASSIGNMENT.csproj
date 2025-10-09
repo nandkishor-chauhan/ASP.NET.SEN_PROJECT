@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\DocumentController.js" />
     <Content Remove="wwwroot\js\StudentController.js" />
     <Content Remove="wwwroot\js\StudentCreateController.js" />
     <Content Remove="wwwroot\js\StudentEditController.js" />
@@ -31,11 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\SpecialEducationEncyclopedia\Controllers\" />
     <Folder Include="wwwroot\images\property\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\DocumentController.js" />
     <None Include="wwwroot\js\StudentEditController.js" />
     <None Include="wwwroot\js\StudentCreateController.js" />
     <None Include="wwwroot\js\StudentController.js" />

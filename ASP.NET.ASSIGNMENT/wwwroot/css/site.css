@@ -68,6 +68,11 @@ main {
     border-top-right-radius: 3px;
 }
 
+.content-doc-heading {
+    background: var(--content-doc-heading-color);
+    color: #ffffff;
+}
+
 .content-body {
     padding: 5px 15px 15px 15px;
     background: #dddddd;
