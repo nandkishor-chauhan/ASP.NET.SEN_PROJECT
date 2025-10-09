@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\DocController.js" />
     <Content Remove="wwwroot\js\DocumentController.js" />
     <Content Remove="wwwroot\js\StudentController.js" />
     <Content Remove="wwwroot\js\StudentCreateController.js" />
@@ -40,6 +41,7 @@
     <None Include="wwwroot\js\StudentEditController.js" />
     <None Include="wwwroot\js\StudentCreateController.js" />
     <None Include="wwwroot\js\StudentController.js" />
+    <None Include="wwwroot\js\DocController.js" />
     <None Include="wwwroot\js\StudentSearchController.js" />
   </ItemGroup>
 

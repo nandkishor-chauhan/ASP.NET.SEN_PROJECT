@@ -50,19 +50,14 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
+    // Fetch all students
     $.ajax({
         url: '/SpecialEducationEncyclopedia/Student/Get',
         type: 'GET',
         success: function (response) {
             if (response.success) {
                 allStudents = response.data;
-                //renderTable(allStudents); // show all initially
-
-                applyFilters(); // apply default filters (if any)
-
-                // show total count before filtering
-                $("#student-count").text($("#student-table-body tr").length);
-
+                renderTable(allStudents); // show all initially
             } else {
                 alert("Error: " + response.error);
             }
@@ -72,49 +67,27 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("change", "input[name='supportLevel'], input[name='entry-status'], input[name='gradeFilter'], #gradeAll", function () {
-        // If "All" grades is checked → uncheck others
-        if ($(this).attr("id") === "gradeAll" && $(this).is(":checked")) {
-            $("input[name='gradeFilter']").prop("checked", false);
-        } else if ($(this).attr("name") === "gradeFilter" && $(this).is(":checked")) {
-            $("#gradeAll").prop("checked", false);
-        }
-
-        applyFilters();
+    // Filter on typing
+    $("#filter-qatar-id, #filter-fullname").on("input", function () {
+        applyTextFilters();
     });
-
 });
 
-let filteredStudents = [];  // store filtered results
-let currentIndex = 0;       // track selected row globally
+let filteredStudents = [];
+let currentIndex = 0;
 let selectedStudentId = null;
 
-function applyFilters() {
-    let selectedLevel = $("input[name='supportLevel']:checked").val() || "All";
-    let selectedStatus = $("input[name='entry-status']:checked").val();
+function applyTextFilters() {
+    let qatarIDFilter = $("#filter-qatar-id").val().trim();
+    let fullnameFilter = $("#filter-fullname").val().trim().toLowerCase();
 
-    let selectedGrades = [];
-    $("input[name='gradeFilter']:checked").each(function () {
-        selectedGrades.push($(this).val());
-    });
-
-    if ($("#gradeAll").is(":checked")) {
-        selectedGrades = "All";
-    }
-
-    // Filter students
     filteredStudents = allStudents.filter(student => {
-        let matchLevel = (selectedLevel === "All" || student.levelSuport == selectedLevel);
-        let matchStatus = (!selectedStatus || student.entryStatus === selectedStatus);
-        let matchGrade = (selectedGrades === "All" || selectedGrades.length === 0 || selectedGrades.includes(student.grade));
-
-        return matchLevel && matchStatus && matchGrade;
+        let matchID = qatarIDFilter === "" || student.qatarID.toString().includes(qatarIDFilter);
+        let matchName = fullnameFilter === "" || student.fullName.toLowerCase().includes(fullnameFilter);
+        return matchID && matchName;
     });
 
     renderTable(filteredStudents);
-
-    // Update student count
-    $("#student-count").text(filteredStudents.length);
 }
 
 function renderTable(students) {
@@ -125,18 +98,16 @@ function renderTable(students) {
         tbody.append('<tr><td colspan="3" class="text-center text-danger">No Data Found</td></tr>');
         clearPersonalInfo();
         selectedStudentId = null;
-        $("#edit-button").attr("href", "#");
         return;
     }
 
     students.forEach(function (student, index) {
-        let row = `
+        tbody.append(`
             <tr data-index="${index}" data-qatarid="${student.qatarID}" class="clickable-row">
                 <td>${index + 1}</td>
                 <td>${student.fullName}</td>
             </tr>
-        `;
-        tbody.append(row);
+        `);
     });
 
     $(".clickable-row").css("cursor", "pointer").on("click", function () {
@@ -149,19 +120,16 @@ function renderTable(students) {
     selectRow(students, currentIndex);
 }
 
-
-// Helper to select a row
 function selectRow(students, index) {
     $(".clickable-row").removeClass("table-active");
-
     let row = $(`tr[data-index="${index}"]`);
     row.addClass("table-active");
 
     let student = students[index];
     if (student) {
-        selectedStudentId = student.id; // store selected student ID
+        selectedStudentId = student.id;
         fillPersonalInfo(student);
-        loadStudentFilesByQatarID(student.qatarID);
+        loadStudentFilesByQatarID(student.qatarID); // Load files for this student
     }
 }
 
@@ -217,6 +185,24 @@ function prevStudent() {
         selectRow(filteredStudents, currentIndex);
     }
 }
+
+$(document).ready(function () {
+    // Initial state
+    $("#filter-qatar-id").prop("disabled", true);
+    $("#filter-fullname").prop("disabled", true);
+
+    // Listen for radio changes
+    $("input[name='mode']").on("change", function () {
+        if ($("#radioSearch").is(":checked")) {
+            $("#filter-qatar-id").prop("disabled", false).focus();
+            $("#filter-fullname").prop("disabled", false);
+        } else {
+            $("#filter-qatar-id").prop("disabled", true).val("");
+            $("#filter-fullname").prop("disabled", true).val("");
+            applyTextFilters(); // reset filter if needed
+        }
+    });
+});
 
 
 function loadStudentFilesByQatarID(qatarID) {
