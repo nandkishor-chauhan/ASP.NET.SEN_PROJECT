@@ -56,7 +56,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     formerSchool = x.formerSchool ?? "",
                     formerLevel = x.formerLevel ?? "",
                     ReportSource = x.ReportSource ?? "",
-                    Instr_W_S = x.Instr_W_St ?? "",
+                    Instr_W_St = x.Instr_W_St ?? "",
 
                     x.DateOfBirth,
                     x.DateOfRegistration,
@@ -103,7 +103,7 @@ namespace ASP.NET.ASSIGNMENT.SEE.Services
                     ReportDate = x.ReportDate?.ToString("yyyy-MM-dd") ?? "",
 
                     x.CreatedOn,
-                    //x.Instr_W_St
+                    x.Instr_W_St,
                 })
                 .ToList();
         }

@@ -50,7 +50,9 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">ID :</label>
                             <div class="col-sm-10">
-                                <input type="text" id="filter-qatar-id" class="form-control" disabled/>
+                                <input type="text" id="filter-qatar-id" class="form-control"
+                                       oninput="if(this.value.length > 11) this.value = this.value.slice(0,11);" 
+                                       disabled />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -95,7 +97,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label text-start"> تقييم المصدر :</label>
                         <div class="col-sm-8">
-                            <input type="text" id="source-evaluation" class="form-control" />
+                            <span id="report-source" class="form-control"></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -123,7 +125,7 @@
                          </button>
 
                         <span>of 22</span>
-                        <input type="text" class="pager-input" value="3" readonly>
+                        <input type="text" class="pager-input" value="1" readonly>
                         
                         <button class="pager-btn" title="Previous" onclick="prevStudent()">
                             <i class="bi bi-chevron-left"></i>
@@ -148,7 +150,27 @@
             </div>
 
             <div class="col-lg-6">
-                This is Doc Preview
+
+                <div class="container mt-4">
+                    <button onclick="window.print()" class="btn btn-primary me-2">Print</button>
+                    <button onclick="saveAsPDF()" class="btn btn-success">Save</button>
+                </div>
+
+                <div class="container text-center mb-2 mt-2">
+                    <h2 class="fw-bold text-success text-decoration-underline">شهادة دراسية</h2>
+                </div>
+                
+
+                <div id="file-details" class="container">
+                </div>
+
+                <div class="card border shadow-sm mt-lg-5">
+                    <div class="card-body">
+                        <textarea id="case-description" class="col-sm-12 h-100" readonly></textarea>
+
+                        <textarea id="instr-w-st-field" class="col-sm-12 h-100" readonly hidden></textarea>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-3 mb-3">
@@ -196,11 +218,11 @@
                             <button id="open-folder" class="btn btn-warning w-100">مجلد مفتوح</button>
                         </div>
                         <div class="col-3">
-                            <button id="display-case-description" class="btn btn-secondary w-100"> حالة العرض</button>
+                            <button id="edit-case-description" class="btn btn-secondary w-100"> حالة العرض</button>
                         </div>
 
                         <div class="col-3">
-                            <button id="edit" class="btn btn-light w-100">يحرر</button>
+                            <button id="edit-instr-field" class="btn btn-light w-100">تعليمات التعامل</button>
                         </div>
                         <div class="col-3">
                             <button id="learning-resource" class="btn btn-warning w-100">موارد التعلم</button>

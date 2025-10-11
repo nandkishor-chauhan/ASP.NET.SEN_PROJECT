@@ -53,7 +53,9 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
                 {
                     FileName = Path.GetFileName(path),
                     Url = $"/uploads/{qatarID}/{Path.GetFileName(path)}",
-                    DateCreated = System.IO.File.GetCreationTime(path).ToString("yyyy-MM-dd")
+                    DateCreated = System.IO.File.GetCreationTime(path).ToString("yyyy-MM-dd"),
+                    qatarID,
+                    
                 })
                 .ToList();
 

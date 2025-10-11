@@ -144,9 +144,12 @@ function fillPersonalInfo(student) {
 
     $("#support-level").text(student.levelSuport || "");
 
-    $("#report-date").text(student.reportDate || "");
+    $("#report-source").text(student.reportSource || "");
+    $("#report-date").val(student.reportDate || "");
 
-    $("#case-description").text(student.caseDescription || "");
+    $("#case-description").val(student.caseDescription || "");
+
+    $("#instr-w-st-field").val(student.instr_W_St || "");
 }
 
 function clearPersonalInfo() {
@@ -154,17 +157,20 @@ function clearPersonalInfo() {
     $("#student-fullname").text("");
 
     // Personal Information
-    $("#qatar-id").val("");
+    $("#qatar-id").text("");
     $("#grade").text("");
     $("#division").text("");
 
     $("#support-level").text("");
 
     $("#report-date").text("");
+    $("#report-source").text("");
 
     $("#report-source").text("");
 
-    $("#case-description").text("");
+    $("#case-description").val("");
+    $("#instr-w-st-field").val("");
+
 }
 
 // Next / Previous buttons
@@ -205,7 +211,7 @@ $(document).ready(function () {
 });
 
 
-function loadStudentFilesByQatarID(qatarID) {
+/*function loadStudentFilesByQatarID(qatarID) {
     $.ajax({
         url: '/SpecialEducationEncyclopedia/Document/GetFilesByQatarID?qatarID=' + qatarID,
         type: 'GET',
@@ -238,5 +244,149 @@ function loadStudentFilesByQatarID(qatarID) {
             $("#file-count").text("0");
         }
     });
+}*/
+
+let selectedFile = null;
+function loadStudentFilesByQatarID(qatarID) {
+    $.ajax({
+        url: '/SpecialEducationEncyclopedia/Document/GetFilesByQatarID?qatarID=' + qatarID,
+        type: 'GET',
+        success: function (res) {
+            let tbody = $("#student-doc-table");
+            tbody.empty();
+
+            if (!res.success || !res.files || res.files.length === 0) {
+                tbody.append(`<tr><td colspan="3" class="text-center text-danger">No files found for this student</td></tr>`);
+                $("#file-count").text("0");
+                $("#file-details").empty(); // Clear details section
+                return;
+            }
+
+            $("#file-count").text(res.count || res.files.length);
+
+            res.files.forEach((file, index) => {
+                let row = `
+                    <tr class="file-row" data-index="${index}">
+                        <td>${index + 1}</td>
+                        <td>${file.fileName}</td>
+                        <td>${file.dateCreated}</td>
+                    </tr>
+                `;
+                tbody.append(row);
+            });
+
+            // Add click event to each row
+            $(".file-row").on("click", function () {
+                // Highlight selected row
+                $(".file-row").removeClass("table-active");
+                $(this).addClass("table-active");
+
+                let index = $(this).data("index");
+                selectedFile = res.files[index];
+                showFileDetails(selectedFile);
+            });
+
+            // Trigger click on the first row to select it by default
+            $(".file-row").first().click();
+        },
+        error: function () {
+            $("#student-doc-table").html(`<tr><td colspan="3" class="text-center text-danger">Error loading files</td></tr>`);
+            $("#file-count").text("0");
+            $("#file-details").empty();
+        }
+    });
 }
+
+function showFileDetails(file) {
+    $("#file-details").html(`
+        <table class="table table-bordered text-center align-middle">
+                        <tbody>
+                            <tr>
+                                <td class="text-danger fw-bold">اسم الطالبSTN</td>
+                                <td>تركي</td>
+                            </tr>
+                            <tr>
+                                <td class="text-danger fw-bold">اللقبTitle</td>
+                                <td>${file.fileName}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-danger fw-bold">PNالرقم الشخصي</td>
+                                <td>${file.qatarID}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-danger fw-bold"> النتيجةResult</td>
+                                <td class="text-danger fw-bold"> ${file.dateCreated}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+    `);
+}
+
+$("#view-file").on("click", function () {
+    if (selectedFile && selectedFile.url) {
+        window.open(selectedFile.url, '_blank'); // Open file in new tab
+    } else {
+        alert("No file selected.");
+    }
+});
+
+$("#open-file").on("click", function () {
+    if (selectedFile && selectedFile.url) {
+        window.open(selectedFile.url, '_blank'); // Open file in new tab
+    } else {
+        alert("No file selected.");
+    }
+});
+
+$("#delete-file").on("click", function () {
+    if (selectedFile && selectedFile.url) {
+        alert("Are you sure to delete this file", selectedFile.url)
+    } else {
+        alert("No file selected.");
+    }
+});
+
+$("#download-file").on("click", function () {
+    if (selectedFile && selectedFile.url) {
+        const link = document.createElement('a');
+        link.href = selectedFile.url;
+        link.download = selectedFile.fileName || 'downloaded_file';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert("No file selected.");
+    }
+});
+
+$("#edit-case-description").on("click", function () {
+    let caseDesc = $("#case-description");
+    let instrField = $("#instr-w-st-field");
+
+    instrField.prop("readonly", true).hide();
+
+    caseDesc.show();
+
+    // Toggle readonly for case description
+    if (caseDesc.prop("readonly")) {
+        caseDesc.prop("readonly", false);
+        caseDesc.focus(); // Optional
+    } else {
+        caseDesc.prop("readonly", true);
+    }
+});
+
+
+$("#edit-instr-field").on("click", function () {
+    // Hide the case description field
+    $("#case-description").hide();
+
+    // Show the instructions field and make it editable
+    $("#instr-w-st-field")
+        .prop("readonly", false)
+        .removeAttr("hidden")
+        .show()
+        .focus(); // Optional: set focus
+});
+
 

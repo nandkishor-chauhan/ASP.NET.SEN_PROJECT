@@ -154,7 +154,8 @@ namespace ASP.NET.ASSIGNMENT.Areas.SpecialEducationEncyclopedia.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UploadFiles(int studentId, List<IFormFile> files)
+        public async Task<IActionResult> UploadFiles([FromForm] long studentId, [FromForm] List<IFormFile> files)
+
         {
             if (studentId <= 0)
                 return BadRequest(new { success = false, message = "Valid Student ID is required" });

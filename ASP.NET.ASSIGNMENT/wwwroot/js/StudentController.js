@@ -429,7 +429,7 @@ function uploadFiles() {
     }
 
     let formData = new FormData();
-    formData.append("studentId", studentId); // int value
+    formData.append("studentId", studentId); 
 
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
@@ -465,7 +465,6 @@ function uploadFiles() {
             }
         },
         error: function (xhr, status, error) {
-            console.error("Upload error:", error);
             $("#upload-status").text("Error uploading files.");
         }
     });
